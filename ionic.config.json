@@ -1,0 +1,7 @@
+{
+  "name": "SadaqahHub",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
