@@ -1,0 +1,149 @@
+.charity-toolbar {
+  --background: #ffffff;
+  padding: 4px 4px 0;
+
+  ion-menu-button { --color: var(--app-green-dark); }
+
+  .toolbar-title {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+    .title-main { font-size: 16px; font-weight: 700; color: var(--app-text); }
+    .title-sub  { font-size: 11px; color: var(--app-subtext); font-weight: 400; }
+  }
+}
+
+.charity-body {
+  padding: 16px;
+  background: var(--app-bg);
+  min-height: 100%;
+}
+
+.summary-card {
+  background: linear-gradient(145deg, #a0195a, #d4326e);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(160, 25, 90, 0.35);
+
+  .summary-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon { font-size: 26px; color: #fff; }
+  }
+
+  .summary-label  { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+  .summary-amount { font-size: 26px; font-weight: 700; color: #fff; }
+}
+
+.cause-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 20px rgba(26, 107, 60, 0.08);
+
+  .cause-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+
+    .cause-icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--app-green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon { font-size: 22px; color: var(--app-green-dark); }
+    }
+
+    .cause-info {
+      flex: 1;
+
+      .cause-title { font-size: 14px; font-weight: 700; color: var(--app-text); margin-bottom: 3px; }
+      .cause-desc  { font-size: 12px; color: var(--app-subtext); line-height: 1.4; }
+    }
+
+    .cause-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--app-green-light);
+      color: var(--app-green-dark);
+      white-space: nowrap;
+
+      &.urgent {
+        background: #fde8e8;
+        color: #c0392b;
+      }
+    }
+  }
+
+  .cause-progress {
+    margin-bottom: 10px;
+
+    .progress-track {
+      height: 8px;
+      background: var(--app-green-light);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 6px;
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #1a6b3c, #2da05a);
+        border-radius: 10px;
+        transition: width 0.4s ease;
+      }
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--app-subtext);
+      font-weight: 500;
+    }
+  }
+
+  .cause-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--app-border);
+
+    .cause-goal {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--app-text);
+    }
+
+    .cause-donors {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--app-subtext);
+
+      ion-icon { font-size: 14px; }
+    }
+  }
+}

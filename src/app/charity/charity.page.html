@@ -1,0 +1,62 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="charity-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">Charity</span>
+      <span class="title-sub">Active Causes</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="charity-body">
+
+    <!-- Summary -->
+    <div class="summary-card">
+      <div class="summary-icon-wrap">
+        <ion-icon name="heart-outline"></ion-icon>
+      </div>
+      <div>
+        <p class="summary-label">Total Charity Raised</p>
+        <h2 class="summary-amount">₹{{ totalRaised() }}</h2>
+      </div>
+    </div>
+
+    <!-- Cause Cards -->
+    <div class="cause-card" *ngFor="let cause of causes">
+      <div class="cause-header">
+        <div class="cause-icon-wrap">
+          <ion-icon [name]="cause.icon"></ion-icon>
+        </div>
+        <div class="cause-info">
+          <h3 class="cause-title">{{ cause.title }}</h3>
+          <p class="cause-desc">{{ cause.description }}</p>
+        </div>
+        <div class="cause-badge" [class.urgent]="cause.urgent">
+          {{ cause.urgent ? 'Urgent' : 'Active' }}
+        </div>
+      </div>
+
+      <div class="cause-progress">
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="getPercent(cause)"></div>
+        </div>
+        <div class="progress-labels">
+          <span>₹{{ cause.raised }} raised</span>
+          <span>{{ getPercent(cause) }}%</span>
+        </div>
+      </div>
+
+      <div class="cause-footer">
+        <span class="cause-goal">Goal: ₹{{ cause.goal }}</span>
+        <span class="cause-donors">
+          <ion-icon name="people-outline"></ion-icon>
+          {{ cause.donors }} donors
+        </span>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

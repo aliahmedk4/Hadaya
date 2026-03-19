@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="donors-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">Donors</span>
+      <span class="title-sub">Donation History</span>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/add-donor" class="add-btn">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Month Filter -->
+  <div class="filter-bar">
+    <ion-icon name="calendar-outline" class="filter-icon"></ion-icon>
+    <span class="filter-label">Month</span>
+    <input type="month" [(ngModel)]="selectedMonth" class="month-input" />
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="donors-body">
+
+    <!-- Skeleton -->
+    <ng-container *ngIf="loading">
+      <div class="donor-card" *ngFor="let i of [1,2,3]">
+        <ion-skeleton-text animated style="width:44px;height:44px;border-radius:14px;flex-shrink:0;"></ion-skeleton-text>
+        <div style="flex:1;padding-left:12px">
+          <ion-skeleton-text animated style="width:120px;height:14px;border-radius:6px;margin-bottom:6px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width:80px;height:11px;border-radius:6px;"></ion-skeleton-text>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!loading">
+      <ng-container *ngFor="let donor of donors">
+
+        <!-- Donor Card -->
+        <div class="donor-card" (click)="toggle(donor)">
+          <div class="donor-left">
+            <div class="donor-avatar">{{ donor.name[0] }}</div>
+            <div class="donor-info">
+              <span class="donor-name">{{ donor.name }}</span>
+              <span class="donor-month-total">{{ selectedMonth }} · ₹{{ filteredTotal(donor) }}</span>
+            </div>
+          </div>
+          <div class="donor-right">
+            <button class="pay-btn" (click)="addPayment($event, donor)">
+              <ion-icon name="add-outline"></ion-icon>
+              Pay
+            </button>
+            <ion-icon [name]="donor.expanded ? 'chevron-up' : 'chevron-down'" class="chevron"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Expanded Payments -->
+        <div class="history-wrap" *ngIf="donor.expanded">
+          <p class="history-empty" *ngIf="donor.payments.length === 0">No payments yet.</p>
+          <div class="history-item" *ngFor="let p of donor.payments"
+            [class.highlighted]="p.date.startsWith(selectedMonth)">
+            <div class="history-dot" [class.active]="p.date.startsWith(selectedMonth)"></div>
+            <div class="history-info">
+              <span class="history-date">{{ p.date }}</span>
+              <span class="history-note" *ngIf="p.note">{{ p.note }}</span>
+            </div>
+            <span class="history-amount">₹{{ p.amount }}</span>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <p class="empty-msg" *ngIf="donors.length === 0">No donors found.</p>
+    </ng-container>
+
+  </div>
+</ion-content>
+
+<!-- Footer Total -->
+<ion-footer class="ion-no-border">
+  <div class="total-footer">
+    <div class="total-left">
+      <ion-icon name="wallet-outline"></ion-icon>
+      <span>{{ selectedMonth }}</span>
+    </div>
+    <span class="total-amount">₹{{ grandTotal() }}</span>
+  </div>
+</ion-footer>

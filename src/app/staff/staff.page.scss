@@ -1,0 +1,104 @@
+.staff-toolbar {
+  --background: #ffffff;
+
+  ion-menu-button { --color: var(--app-green-dark); }
+
+  .toolbar-title {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+    .title-main { font-size: 16px; font-weight: 700; color: var(--app-text); }
+    .title-sub  { font-size: 11px; color: var(--app-subtext); font-weight: 400; }
+  }
+}
+
+.staff-body {
+  padding: 16px;
+  background: var(--app-bg);
+  min-height: 100%;
+}
+
+.summary-card {
+  background: linear-gradient(145deg, #1a6b3c, #2da05a);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(26, 107, 60, 0.35);
+
+  .summary-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon { font-size: 26px; color: #fff; }
+  }
+
+  .summary-label { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+  .summary-amount { font-size: 26px; font-weight: 700; color: #fff; }
+}
+
+.staff-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(26, 107, 60, 0.08);
+
+  .staff-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .staff-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: var(--app-green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon { font-size: 22px; color: var(--app-green-dark); }
+    }
+
+    .staff-info {
+      display: flex;
+      flex-direction: column;
+
+      .staff-name { font-size: 14px; font-weight: 600; color: var(--app-text); }
+      .staff-role { font-size: 12px; color: var(--app-subtext); margin-top: 2px; }
+    }
+  }
+
+  .staff-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+
+    .staff-amount { font-size: 15px; font-weight: 700; color: var(--app-green-dark); }
+
+    .status-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+
+      &.paid    { background: var(--app-green-light); color: var(--app-green-dark); }
+      &.pending { background: var(--app-gold-light);  color: var(--app-gold); }
+    }
+  }
+}

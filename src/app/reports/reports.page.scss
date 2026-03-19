@@ -1,0 +1,162 @@
+.reports-toolbar {
+  --background: #ffffff;
+
+  ion-menu-button { --color: var(--app-green-dark); }
+
+  .toolbar-title {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+    .title-main { font-size: 16px; font-weight: 700; color: var(--app-text); }
+    .title-sub  { font-size: 11px; color: var(--app-subtext); font-weight: 400; }
+  }
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  padding: 10px 18px 14px;
+  border-bottom: 1px solid var(--app-border);
+
+  .filter-icon { font-size: 18px; color: var(--app-green-dark); }
+  .filter-label { font-size: 13px; font-weight: 500; color: var(--app-subtext); flex: 1; }
+
+  .month-input {
+    border: 1px solid var(--app-border);
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--app-green-dark);
+    font-weight: 600;
+    background: var(--app-green-light);
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.reports-body {
+  padding: 16px;
+  background: var(--app-bg);
+  min-height: 100%;
+}
+
+// ── Summary Card ──────────────────────────────────────
+.summary-card {
+  background: linear-gradient(145deg, #1a6b3c, #2da05a);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(26, 107, 60, 0.35);
+
+  .summary-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .summary-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      ion-icon { font-size: 26px; color: rgba(255,255,255,0.8); }
+
+      p { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
+      h3 { font-size: 20px; font-weight: 700; color: #fff; }
+    }
+
+    .summary-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.25);
+      margin: 0 16px;
+    }
+  }
+
+  .all-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+
+    ion-icon { font-size: 18px; }
+    &:disabled { opacity: 0.6; }
+  }
+}
+
+// ── Donor Report Card ─────────────────────────────────
+.donor-report-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 16px rgba(26, 107, 60, 0.08);
+
+  .donor-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1a6b3c, #2da05a);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .donor-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .donor-name        { font-size: 14px; font-weight: 600; color: var(--app-text); }
+    .donor-month-amount { font-size: 12px; color: var(--app-green-dark); font-weight: 600; margin-top: 2px; }
+    .payment-count     { font-size: 11px; color: var(--app-subtext); margin-top: 1px; }
+  }
+
+  .invoice-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #1a6b3c, #2da05a);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 9px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(26, 107, 60, 0.3);
+    flex-shrink: 0;
+
+    ion-icon { font-size: 15px; }
+    &:disabled { opacity: 0.6; }
+  }
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--app-subtext);
+  font-size: 13px;
+  padding: 30px 0;
+}

@@ -1,0 +1,70 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="add-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/donors" class="back-btn"></ion-back-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">Add Donor</span>
+      <span class="title-sub">New Donation Entry</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-body">
+
+    <div class="form-card">
+
+      <!-- Name -->
+      <div class="field-group">
+        <label class="field-label">Donor Name</label>
+        <div class="input-wrap">
+          <ion-icon name="person-outline" class="input-icon"></ion-icon>
+          <input type="text" [(ngModel)]="name" placeholder="e.g. Ahmed Khan" class="field-input" />
+        </div>
+      </div>
+
+      <!-- Amount -->
+      <div class="field-group">
+        <label class="field-label">Amount (₹)</label>
+        <div class="input-wrap">
+          <ion-icon name="cash-outline" class="input-icon"></ion-icon>
+          <input type="number" [(ngModel)]="amount" placeholder="e.g. 500" class="field-input" />
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="field-group">
+        <label class="field-label">Status</label>
+        <div class="status-toggle">
+          <div class="status-option" [class.active]="status === 'Paid'" (click)="status = 'Paid'">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            Paid
+          </div>
+          <div class="status-option pending" [class.active]="status === 'Pending'" (click)="status = 'Pending'">
+            <ion-icon name="time-outline"></ion-icon>
+            Pending
+          </div>
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div class="field-group">
+        <label class="field-label">Date</label>
+        <div class="input-wrap">
+          <ion-icon name="calendar-outline" class="input-icon"></ion-icon>
+          <input type="date" [(ngModel)]="date" class="field-input" />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Submit -->
+    <button class="submit-btn" (click)="submit()" [disabled]="saving">
+      <ion-spinner name="crescent" *ngIf="saving"></ion-spinner>
+      <ion-icon name="add-circle-outline" *ngIf="!saving"></ion-icon>
+      <span>{{ saving ? 'Saving...' : 'Add Donor' }}</span>
+    </button>
+
+  </div>
+</ion-content>

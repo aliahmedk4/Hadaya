@@ -1,20 +1,144 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="main-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button class="menu-btn"></ion-menu-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">SadaqahHub</span>
+      <span class="title-sub">Dashboard</span>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <ion-icon name="notifications-outline" class="notif-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- Banner -->
+  <div class="banner-wrap">
+    <img src="../../assets/mosque2.png" class="banner-img" />
+    <div class="banner-overlay">
+      <div class="banner-tag">
+        <ion-icon name="star-outline"></ion-icon> Featured
+      </div>
+      <h2>Assalamu Alaikum</h2>
+      <p>Support your local masjid today</p>
+    </div>
   </div>
+
+  <div class="page-body">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card green">
+        <div class="stat-icon-wrap">
+          <ion-icon name="cash-outline"></ion-icon>
+        </div>
+        <h2>
+          <ion-skeleton-text *ngIf="loading" animated style="width:80px;height:24px;border-radius:6px;"></ion-skeleton-text>
+          <span *ngIf="!loading">₹{{ totalCollected }}</span>
+        </h2>
+        <p>Total Collected</p>
+      </div>
+      <div class="stat-card gold" routerLink="/donors">
+        <div class="stat-icon-wrap">
+          <ion-icon name="people-outline"></ion-icon>
+        </div>
+        <h2>
+          <ion-skeleton-text *ngIf="loading" animated style="width:40px;height:24px;border-radius:6px;"></ion-skeleton-text>
+          <span *ngIf="!loading">{{ totalDonors }}</span>
+        </h2>
+        <p>Total Donors</p>
+      </div>
+    </div>
+
+    <!-- Goal Progress -->
+    <div class="section-card goal-card">
+      <div class="goal-top">
+        <div>
+          <p class="card-label">Fundraising Goal</p>
+          <h3 class="goal-title">₹{{ goalAmount }}</h3>
+        </div>
+        <div class="goal-badge">{{ goalPercent }}%</div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="goalPercent"></div>
+      </div>
+      <div class="goal-bottom">
+        <span>₹{{ totalCollected }} raised</span>
+        <span>₹{{ goalRemaining }} remaining</span>
+      </div>
+    </div>
+
+    <!-- Recent Donors -->
+    <div class="section-card">
+      <div class="card-header-row">
+        <h3 class="card-title">Recent Donors</h3>
+        <a routerLink="/donors" class="see-all">See all</a>
+      </div>
+
+      <!-- Skeleton while loading -->
+      <div class="donor-list" *ngIf="loading">
+        <div class="donor-row" *ngFor="let i of [1,2,3]">
+          <ion-skeleton-text animated style="width:42px;height:42px;border-radius:14px;flex-shrink:0;"></ion-skeleton-text>
+          <div class="donor-info" style="flex:1">
+            <ion-skeleton-text animated style="width:100px;height:13px;border-radius:6px;margin-bottom:6px;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width:60px;height:11px;border-radius:6px;"></ion-skeleton-text>
+          </div>
+          <ion-skeleton-text animated style="width:50px;height:24px;border-radius:20px;"></ion-skeleton-text>
+        </div>
+      </div>
+
+      <!-- Live donor list -->
+      <div class="donor-list" *ngIf="!loading">
+        <div class="donor-row" *ngFor="let donor of recentDonors">
+          <div class="donor-avatar">{{ donor.name[0] }}</div>
+          <div class="donor-info">
+            <span class="donor-name">{{ donor.name }}</span>
+            <span class="donor-amount">₹{{ donor.amount }}</span>
+          </div>
+          <span class="status-pill" [class.paid]="donor.status === 'Paid'" [class.pending]="donor.status === 'Pending'">
+            {{ donor.status }}
+          </span>
+        </div>
+        <p class="empty-msg" *ngIf="recentDonors.length === 0">No donors yet.</p>
+      </div>
+    </div>
+
+    <!-- Staff Distribution -->
+    <div class="section-card">
+      <div class="card-header-row">
+        <h3 class="card-title">Staff Distribution</h3>
+        <a routerLink="/staff" class="see-all">See all</a>
+      </div>
+      <div class="staff-grid">
+        <div class="staff-item" *ngFor="let s of staffList">
+          <div class="staff-icon-wrap">
+            <ion-icon [name]="s.icon"></ion-icon>
+          </div>
+          <p class="staff-role">{{ s.role }}</p>
+          <p class="staff-pay">₹{{ s.amount }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charity Quick Link -->
+    <div class="section-card charity-banner" routerLink="/charity">
+      <div class="charity-left">
+        <div class="charity-icon-wrap">
+          <ion-icon name="heart-outline"></ion-icon>
+        </div>
+        <div>
+          <h3 class="card-title">Charity Causes</h3>
+          <p>Support active campaigns</p>
+        </div>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="charity-arrow"></ion-icon>
+    </div>
+
+  </div>
+
 </ion-content>

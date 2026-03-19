@@ -1,0 +1,45 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="staff-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">Staff</span>
+      <span class="title-sub">Salary Distribution</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="staff-body">
+
+    <div class="summary-card">
+      <div class="summary-icon-wrap">
+        <ion-icon name="wallet-outline"></ion-icon>
+      </div>
+      <div>
+        <p class="summary-label">Total Monthly Payout</p>
+        <h2 class="summary-amount">₹{{ totalPayout() }}</h2>
+      </div>
+    </div>
+
+    <div class="staff-card" *ngFor="let s of staffList">
+      <div class="staff-left">
+        <div class="staff-icon-wrap">
+          <ion-icon [name]="s.icon"></ion-icon>
+        </div>
+        <div class="staff-info">
+          <span class="staff-name">{{ s.name }}</span>
+          <span class="staff-role">{{ s.role }}</span>
+        </div>
+      </div>
+      <div class="staff-right">
+        <span class="staff-amount">₹{{ s.amount }}</span>
+        <span class="status-pill" [class.paid]="s.status === 'Paid'" [class.pending]="s.status === 'Pending'">
+          {{ s.status }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

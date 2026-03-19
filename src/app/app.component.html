@@ -1,3 +1,65 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content class="menu-content" [scrollY]="false">
+
+      <!-- Menu Header -->
+      <div class="menu-header">
+        <div class="menu-avatar">
+          <ion-icon name="business-outline"></ion-icon>
+        </div>
+        <h3>SadaqahHub</h3>
+        <p>Community Donation Tracker</p>
+      </div>
+
+      <!-- Nav Items -->
+      <div class="menu-nav">
+        <a class="nav-item" routerLink="/home" routerLinkActive="nav-active" (click)="closeMenu()">
+          <div class="nav-icon-wrap">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+          <span>Home</span>
+          <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+        </a>
+        <a class="nav-item" routerLink="/donors" routerLinkActive="nav-active" (click)="closeMenu()">
+          <div class="nav-icon-wrap">
+            <ion-icon name="people-outline"></ion-icon>
+          </div>
+          <span>Donors</span>
+          <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+        </a>
+        <a class="nav-item" routerLink="/staff" routerLinkActive="nav-active" (click)="closeMenu()">
+          <div class="nav-icon-wrap">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </div>
+          <span>Staff</span>
+          <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+        </a>
+        <a class="nav-item" routerLink="/charity" routerLinkActive="nav-active" (click)="closeMenu()">
+          <div class="nav-icon-wrap">
+            <ion-icon name="heart-outline"></ion-icon>
+          </div>
+          <span>Charity</span>
+          <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+        </a>
+        <a class="nav-item" routerLink="/reports" routerLinkActive="nav-active" (click)="closeMenu()">
+          <div class="nav-icon-wrap">
+            <ion-icon name="document-text-outline"></ion-icon>
+          </div>
+          <span>Reports</span>
+          <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+        </a>
+      </div>
+
+      <!-- Menu Footer -->
+      <div class="menu-footer">
+        <ion-icon name="leaf-outline"></ion-icon>
+        <span>SadaqahHub &copy; 2025</span>
+      </div>
+
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
 </ion-app>

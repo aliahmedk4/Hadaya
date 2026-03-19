@@ -1,27 +1,217 @@
-#container {
-  text-align: center;
+.main-toolbar {
+  --background: #ffffff;
+  --color: var(--app-text);
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  .menu-btn { --color: var(--app-green-dark); }
+
+  .toolbar-title {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+    .title-main { font-size: 16px; font-weight: 700; color: var(--app-text); }
+    .title-sub  { font-size: 11px; color: var(--app-subtext); font-weight: 400; }
+  }
+
+  .notif-icon { font-size: 22px; color: var(--app-green-dark); }
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.banner-wrap {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+
+  .banner-img { width: 100%; height: 100%; object-fit: cover; }
+
+  .banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+
+    .banner-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      width: fit-content;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+
+      ion-icon { font-size: 10px; }
+    }
+
+    h2 { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    p  { color: rgba(255,255,255,0.8); font-size: 13px; }
+  }
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+.page-body { padding: 16px; background: var(--app-bg); }
 
-  color: #8c8c8c;
+.stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
 
-  margin: 0;
+  .stat-card {
+    flex: 1;
+    border-radius: 20px;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+
+    .stat-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      ion-icon { font-size: 20px; color: #fff; }
+    }
+
+    h2 { font-size: 24px; font-weight: 700; color: #fff; line-height: 1; }
+    p  { font-size: 12px; color: rgba(255,255,255,0.85); margin-top: -4px; }
+
+    &.green { background: linear-gradient(145deg, #1a6b3c, #2da05a); box-shadow: 0 6px 20px rgba(26,107,60,0.35); }
+    &.gold  { background: linear-gradient(145deg, #b5720a, #e8921c); box-shadow: 0 6px 20px rgba(184,114,10,0.35); }
+  }
 }
 
-#container a {
-  text-decoration: none;
+.section-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(26, 107, 60, 0.08);
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+
+  .card-title { font-size: 15px; font-weight: 700; color: var(--app-text); }
+  .see-all    { font-size: 12px; font-weight: 600; color: var(--app-green-dark); text-decoration: none; }
+}
+
+.goal-card {
+  .goal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+
+    .card-label  { font-size: 12px; color: var(--app-subtext); margin-bottom: 2px; }
+    .goal-title  { font-size: 22px; font-weight: 700; color: var(--app-text); }
+    .goal-badge  {
+      background: linear-gradient(135deg, #1a6b3c, #2da05a);
+      color: #fff; font-size: 15px; font-weight: 700;
+      padding: 6px 14px; border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(26,107,60,0.3);
+    }
+  }
+
+  .progress-track {
+    height: 10px; background: var(--app-green-light);
+    border-radius: 10px; overflow: hidden; margin-bottom: 10px;
+
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #1a6b3c, #2da05a); border-radius: 10px; }
+  }
+
+  .goal-bottom { display: flex; justify-content: space-between; font-size: 12px; color: var(--app-subtext); font-weight: 500; }
+}
+
+.donor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .donor-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .donor-avatar {
+      width: 42px; height: 42px; border-radius: 14px;
+      background: linear-gradient(135deg, #1a6b3c, #2da05a);
+      color: #fff; font-size: 17px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    .donor-info {
+      flex: 1; display: flex; flex-direction: column;
+      .donor-name   { font-size: 14px; font-weight: 600; color: var(--app-text); }
+      .donor-amount { font-size: 12px; color: var(--app-subtext); margin-top: 1px; }
+    }
+
+    .status-pill {
+      font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;
+      &.paid    { background: var(--app-green-light); color: var(--app-green-dark); }
+      &.pending { background: var(--app-gold-light);  color: var(--app-gold); }
+    }
+  }
+}
+
+.staff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  .staff-item {
+    background: var(--app-bg); border-radius: 16px;
+    padding: 16px 10px; text-align: center; border: 1px solid var(--app-border);
+
+    .staff-icon-wrap {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: var(--app-green-light);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
+      ion-icon { font-size: 22px; color: var(--app-green-dark); }
+    }
+
+    .staff-role { font-size: 13px; font-weight: 600; color: var(--app-text); margin-bottom: 4px; }
+    .staff-pay  { font-size: 14px; font-weight: 700; color: var(--app-green-dark); }
+  }
+}
+
+.charity-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  .charity-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    .charity-icon-wrap {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: #fde8f0;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      ion-icon { font-size: 22px; color: #c0392b; }
+    }
+
+    .card-title { font-size: 15px; font-weight: 700; color: var(--app-text); margin-bottom: 2px; }
+    p { font-size: 12px; color: var(--app-subtext); }
+  }
+
+  .charity-arrow { font-size: 18px; color: var(--app-subtext); }
 }

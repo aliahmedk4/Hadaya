@@ -1,2 +1,61 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  --ion-font-family: 'Poppins', sans-serif;
+
+  --ion-color-primary: #1a6b3c;
+  --ion-color-primary-rgb: 26, 107, 60;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #145230;
+  --ion-color-primary-tint: #228b4e;
+
+  --ion-color-success: #1a6b3c;
+  --ion-color-success-rgb: 26, 107, 60;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-shade: #145230;
+  --ion-color-success-tint: #228b4e;
+
+  --ion-color-warning: #d4820a;
+  --ion-color-warning-rgb: 212, 130, 10;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-shade: #b56d08;
+  --ion-color-warning-tint: #e8921c;
+
+  --ion-background-color: #eef2f0;
+  --ion-card-background: #ffffff;
+
+  --app-green-dark:   #1a6b3c;
+  --app-green-mid:    #228b4e;
+  --app-green-light:  #d6ede1;
+  --app-gold:         #c9920a;
+  --app-gold-light:   #fdf3dc;
+  --app-surface:      #ffffff;
+  --app-bg:           #eef2f0;
+  --app-text:         #1a1a2e;
+  --app-subtext:      #6b7280;
+  --app-border:       #e2e8e4;
+
+  --card-shadow: 0 4px 20px rgba(26, 107, 60, 0.10);
+  --card-radius: 20px;
+}
+
+ion-card {
+  border-radius: var(--card-radius) !important;
+  box-shadow: var(--card-shadow) !important;
+  margin: 0 0 16px 0;
+}
+
+ion-toolbar {
+  --border-width: 0 !important;
+  --box-shadow: none !important;
+}
+
+ion-header {
+  background: #ffffff;
+}
+
+ion-footer {
+  padding-bottom: env(safe-area-inset-bottom) !important;
+}
+
+ion-content {
+  --background: var(--app-bg);
+}

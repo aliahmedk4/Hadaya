@@ -1,0 +1,83 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="reports-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">Reports</span>
+      <span class="title-sub">Donor Invoices</span>
+    </div>
+  </ion-toolbar>
+
+  <!-- Month Filter -->
+  <div class="filter-bar">
+    <ion-icon name="calendar-outline" class="filter-icon"></ion-icon>
+    <span class="filter-label">Month</span>
+    <input type="month" [(ngModel)]="selectedMonth" class="month-input" (change)="onMonthChange()" />
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="reports-body">
+
+    <!-- Summary Card -->
+    <div class="summary-card">
+      <div class="summary-row">
+        <div class="summary-item">
+          <ion-icon name="people-outline"></ion-icon>
+          <div>
+            <p>Total Donors</p>
+            <h3>{{ donors.length }}</h3>
+          </div>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-item">
+          <ion-icon name="cash-outline"></ion-icon>
+          <div>
+            <p>Month Total</p>
+            <h3>₹{{ monthTotal }}</h3>
+          </div>
+        </div>
+      </div>
+      <button class="all-btn" (click)="generateAllReport()" [disabled]="generating">
+        <ion-spinner name="crescent" *ngIf="generating"></ion-spinner>
+        <ion-icon name="document-text-outline" *ngIf="!generating"></ion-icon>
+        {{ generating ? 'Generating...' : 'Download All Donors Report' }}
+      </button>
+    </div>
+
+    <!-- Skeleton -->
+    <ng-container *ngIf="loading">
+      <div class="donor-report-card" *ngFor="let i of [1,2,3]">
+        <ion-skeleton-text animated style="width:44px;height:44px;border-radius:14px;flex-shrink:0;"></ion-skeleton-text>
+        <div style="flex:1;padding-left:12px">
+          <ion-skeleton-text animated style="width:120px;height:14px;border-radius:6px;margin-bottom:6px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width:80px;height:11px;border-radius:6px;"></ion-skeleton-text>
+        </div>
+        <ion-skeleton-text animated style="width:80px;height:36px;border-radius:10px;"></ion-skeleton-text>
+      </div>
+    </ng-container>
+
+    <!-- Donor Cards -->
+    <ng-container *ngIf="!loading">
+      <div class="donor-report-card" *ngFor="let donor of donors">
+        <div class="donor-avatar">{{ donor.name[0] }}</div>
+        <div class="donor-info">
+          <span class="donor-name">{{ donor.name }}</span>
+          <span class="donor-month-amount">
+            {{ selectedMonth }} · ₹{{ getMonthTotal(donor) }}
+          </span>
+          <span class="payment-count">{{ getMonthPayments(donor).length }} payment(s)</span>
+        </div>
+        <button class="invoice-btn" (click)="generateInvoice(donor)" [disabled]="donor.generating">
+          <ion-spinner name="crescent" *ngIf="donor.generating" style="width:16px;height:16px;"></ion-spinner>
+          <ion-icon name="download-outline" *ngIf="!donor.generating"></ion-icon>
+          <span>{{ donor.generating ? '...' : 'Invoice' }}</span>
+        </button>
+      </div>
+
+      <p class="empty-msg" *ngIf="donors.length === 0">No donors found.</p>
+    </ng-container>
+
+  </div>
+</ion-content>
