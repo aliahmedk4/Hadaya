@@ -41,7 +41,9 @@
             "styles": ["src/global.scss", "src/theme/variables.scss"],
             "scripts": [
               "node_modules/ionicons/dist/ionicons/ionicons.js"
-            ]
+            ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
