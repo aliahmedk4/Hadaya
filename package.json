@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "deploy": "gh-pages -d www"
+    "deploy": "ng build --base-href=/Hadaya/ --deploy-url=/Hadaya/ && npx angular-cli-ghpages --dir=www"
   },
   "private": true,
   "dependencies": {
