@@ -1,0 +1,92 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="hadith-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" class="back-btn"></ion-back-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">Daily Hadith</span>
+      <span class="title-sub">Hadith of the Day</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hadith-content">
+
+  <!-- Hero banner with floating particles -->
+  <div class="hero-banner" @fadeUp>
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
+    <div class="hero-ornament top-left">&#x2756;</div>
+    <div class="hero-ornament top-right">&#x2756;</div>
+    <div class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <p class="hero-sub">In the name of Allah, the Most Gracious, the Most Merciful</p>
+    <div class="hero-ornament bottom-left">&#x2756;</div>
+    <div class="hero-ornament bottom-right">&#x2756;</div>
+  </div>
+
+  <div class="page-body">
+
+    <!-- Daily label -->
+    <div class="daily-label-row" @fadeUp>
+      <div class="daily-line"></div>
+      <span class="daily-label">Today's Hadith</span>
+      <div class="daily-line"></div>
+    </div>
+
+    <!-- Main hadith card — animated swap -->
+    <div *ngIf="cardVisible" @cardSwap>
+      <div class="hadith-card">
+
+        <div class="card-top-bar"></div>
+
+        <div class="arabic-wrap">
+          <div class="quote-mark right-quote">&#x201C;</div>
+          <p class="arabic-text" dir="rtl">{{ daily.arabic }}</p>
+          <div class="quote-mark left-quote">&#x201D;</div>
+        </div>
+
+        <div class="card-divider">
+          <div class="divider-line"></div>
+          <ion-icon name="leaf-outline" class="divider-icon"></ion-icon>
+          <div class="divider-line"></div>
+        </div>
+
+        <p class="english-text">{{ daily.english }}</p>
+
+        <div class="source-wrap">
+          <div class="source-badge">
+            <ion-icon name="book-outline"></ion-icon>
+            <span>{{ daily.source }}</span>
+          </div>
+          <p class="narrator">{{ daily.narrator }}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- All hadiths selector -->
+    <div class="selector-label-row">
+      <div class="daily-line"></div>
+      <span class="daily-label">All Hadiths</span>
+      <div class="daily-line"></div>
+    </div>
+
+    <div class="hadith-list" [@listStagger]="hadiths.length">
+      <div class="hadith-item" *ngFor="let h of hadiths; let i = index"
+           [class.active]="i === activeIndex"
+           (click)="select(i)">
+        <div class="item-number">{{ i + 1 }}</div>
+        <div class="item-body">
+          <p class="item-arabic" dir="rtl">{{ h.arabic }}</p>
+          <p class="item-source">{{ h.source }}</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="item-arrow"></ion-icon>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

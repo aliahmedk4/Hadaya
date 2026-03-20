@@ -1,0 +1,261 @@
+// ── Keyframes ─────────────────────────────────────────
+@keyframes floatUp {
+  0%   { transform: translateY(0) scale(1);   opacity: 0.5; }
+  50%  { transform: translateY(-18px) scale(1.1); opacity: 0.8; }
+  100% { transform: translateY(0) scale(1);   opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 8px 32px rgba(26,107,60,0.12); }
+  50%       { box-shadow: 0 12px 48px rgba(26,107,60,0.28); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes ornamentPulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%       { opacity: 0.55; transform: scale(1.3); }
+}
+
+@keyframes barSlide {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+// ── Toolbar ───────────────────────────────────────────
+.hadith-toolbar {
+  --background: #ffffff;
+  .back-btn { --color: var(--app-green-dark); }
+  .toolbar-title {
+    display: flex; flex-direction: column; line-height: 1.2;
+    .title-main { font-size: 16px; font-weight: 700; color: var(--app-text); }
+    .title-sub  { font-size: 11px; color: var(--app-subtext); font-weight: 400; }
+  }
+}
+
+.hadith-content { --background: #f2f7f4; }
+
+// ── Hero Banner ───────────────────────────────────────
+.hero-banner {
+  position: relative;
+  background: linear-gradient(160deg, #145c34 0%, #1a6b3c 45%, #2da05a 100%);
+  padding: 40px 24px 36px;
+  text-align: center;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  // floating particles
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    animation: floatUp ease-in-out infinite;
+  }
+  .p1 { width: 10px; height: 10px; left: 12%;  top: 20%; animation-duration: 3.2s; animation-delay: 0s; }
+  .p2 { width: 6px;  height: 6px;  left: 28%;  top: 60%; animation-duration: 2.6s; animation-delay: 0.5s; }
+  .p3 { width: 14px; height: 14px; left: 72%;  top: 25%; animation-duration: 4.0s; animation-delay: 1.0s; }
+  .p4 { width: 8px;  height: 8px;  left: 85%;  top: 65%; animation-duration: 3.5s; animation-delay: 0.3s; }
+  .p5 { width: 5px;  height: 5px;  left: 50%;  top: 15%; animation-duration: 2.9s; animation-delay: 1.4s; }
+
+  .hero-ornament {
+    position: absolute;
+    font-size: 20px;
+    color: rgba(255,255,255,0.3);
+    animation: ornamentPulse 3s ease-in-out infinite;
+    &.top-left    { top: 14px; left: 18px; animation-delay: 0s; }
+    &.top-right   { top: 14px; right: 18px; animation-delay: 0.8s; }
+    &.bottom-left { bottom: 14px; left: 18px; animation-delay: 1.6s; }
+    &.bottom-right{ bottom: 14px; right: 18px; animation-delay: 2.4s; }
+  }
+
+  .hero-bismillah {
+    position: relative;
+    font-size: 23px;
+    color: #fff;
+    font-family: 'Georgia', serif;
+    line-height: 1.7;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    // shimmer effect on text
+    background: linear-gradient(90deg, #fff 0%, #d4f5e2 40%, #fff 60%, #d4f5e2 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+
+  .hero-sub {
+    position: relative;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.4px;
+  }
+}
+
+// ── Page Body ─────────────────────────────────────────
+.page-body { padding: 20px 16px 36px; }
+
+.daily-label-row, .selector-label-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  .daily-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, #c8ddd0);
+    &:last-child { background: linear-gradient(to left, transparent, #c8ddd0); }
+  }
+
+  .daily-label {
+    font-size: 11px; font-weight: 700;
+    color: var(--app-subtext);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    white-space: nowrap;
+  }
+}
+
+.selector-label-row { margin-top: 28px; }
+
+// ── Main Hadith Card ──────────────────────────────────
+.hadith-card {
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  animation: pulseGlow 4s ease-in-out infinite;
+
+  .card-top-bar {
+    height: 5px;
+    background: linear-gradient(90deg, #1a6b3c, #2da05a, #d4af37, #2da05a, #1a6b3c);
+    background-size: 200% auto;
+    animation: barSlide 3s linear infinite;
+  }
+
+  .arabic-wrap {
+    position: relative;
+    padding: 28px 24px 16px;
+    background: linear-gradient(180deg, #f0f8f3 0%, #fff 100%);
+
+    .quote-mark {
+      position: absolute;
+      font-size: 72px;
+      color: rgba(26,107,60,0.07);
+      font-family: 'Georgia', serif;
+      line-height: 1;
+      &.right-quote { top: 4px; right: 14px; }
+      &.left-quote  { bottom: -4px; left: 14px; }
+    }
+
+    .arabic-text {
+      font-size: 20px;
+      line-height: 2.1;
+      color: #1a2e22;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      font-weight: 600;
+    }
+  }
+
+  .card-divider {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 24px; margin: 4px 0;
+
+    .divider-line { flex: 1; height: 1px; background: #e8f0eb; }
+
+    .divider-icon {
+      font-size: 16px;
+      color: var(--app-green-dark);
+      animation: spinSlow 8s linear infinite;
+    }
+  }
+
+  .english-text {
+    font-size: 14px; line-height: 1.85;
+    color: #3a4a40; font-style: italic;
+    text-align: center; padding: 16px 24px;
+  }
+
+  .source-wrap {
+    padding: 0 24px 24px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 6px;
+
+    .source-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--app-green-light);
+      color: var(--app-green-dark);
+      font-size: 11px; font-weight: 700;
+      padding: 5px 14px; border-radius: 20px;
+      ion-icon { font-size: 13px; }
+    }
+
+    .narrator { font-size: 11px; color: var(--app-subtext); text-align: center; }
+  }
+}
+
+// ── Hadith List ───────────────────────────────────────
+.hadith-list {
+  display: flex; flex-direction: column; gap: 10px;
+
+  .hadith-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 2px 12px rgba(26,107,60,0.07);
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &:active { transform: scale(0.97); }
+
+    &.active {
+      border-color: var(--app-green-dark);
+      background: var(--app-green-light);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(26,107,60,0.18);
+
+      .item-number { background: var(--app-green-dark); color: #fff; }
+      .item-arabic { color: var(--app-green-dark); }
+      .item-arrow  { color: var(--app-green-dark); transform: translateX(3px); }
+    }
+
+    .item-number {
+      width: 32px; height: 32px; border-radius: 10px;
+      background: var(--app-green-light);
+      color: var(--app-green-dark);
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.25s;
+    }
+
+    .item-body {
+      flex: 1; overflow: hidden;
+      .item-arabic {
+        font-size: 13px; color: #2a3a30;
+        font-family: 'Georgia', serif;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        direction: rtl; margin-bottom: 3px; transition: color 0.2s;
+      }
+      .item-source { font-size: 10px; color: var(--app-subtext); font-weight: 600; }
+    }
+
+    .item-arrow { font-size: 14px; color: #ccc; flex-shrink: 0; transition: all 0.25s; }
+  }
+}

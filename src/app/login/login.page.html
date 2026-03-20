@@ -1,0 +1,40 @@
+<ion-content class="login-content">
+  <div class="login-wrap">
+
+    <div class="login-header">
+      <div class="logo-wrap">
+        <ion-icon name="leaf-outline"></ion-icon>
+      </div>
+      <h1>SadaqahHub</h1>
+      <p>Sign in to manage donations</p>
+    </div>
+
+    <div class="login-card">
+
+      <div class="field-group">
+        <label class="field-label">Username</label>
+        <div class="input-wrap">
+          <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+          <input type="email" [(ngModel)]="user" placeholder="admin@masjid.com" class="field-input" (keyup.enter)="login()" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Password</label>
+        <div class="input-wrap">
+          <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+          <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" placeholder="••••••••" class="field-input" (keyup.enter)="login()" />
+          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" class="eye-icon" (click)="showPassword = !showPassword"></ion-icon>
+        </div>
+      </div>
+
+      <button class="login-btn" (click)="login()" [disabled]="loading">
+        <ion-spinner name="crescent" *ngIf="loading"></ion-spinner>
+        <ion-icon name="log-in-outline" *ngIf="!loading"></ion-icon>
+        <span>{{ loading ? 'Signing in...' : 'Sign In' }}</span>
+      </button>
+
+    </div>
+
+  </div>
+</ion-content>
