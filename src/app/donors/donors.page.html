@@ -8,8 +8,14 @@
       <span class="title-sub">Donation History</span>
     </div>
     <ion-buttons slot="end">
-      <ion-button fill="clear" routerLink="/add-donor" class="add-btn">
+      <ion-button fill="clear" routerLink="/add-donor" class="add-btn" *ngIf="auth.isLoggedIn()">
         <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" class="add-btn" (click)="logout()" *ngIf="auth.isLoggedIn()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" class="add-btn" routerLink="/login" *ngIf="!auth.isLoggedIn()">
+        <ion-icon name="log-in-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -49,7 +55,10 @@
             </div>
           </div>
           <div class="donor-right">
-            <button class="pay-btn" (click)="addPayment($event, donor)">
+            <span class="status-pill" [class.paid]="isPaid(donor)" [class.pending]="!isPaid(donor)">
+              {{ isPaid(donor) ? 'Paid' : 'Pending' }}
+            </span>
+            <button class="pay-btn" (click)="addPayment($event, donor)" *ngIf="auth.isLoggedIn()">
               <ion-icon name="add-outline"></ion-icon>
               Pay
             </button>

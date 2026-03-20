@@ -49,6 +49,39 @@
           <span>Reports</span>
           <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
         </a>
+        <a class="nav-item" routerLink="/hadith" routerLinkActive="nav-active" (click)="closeMenu()">
+          <div class="nav-icon-wrap">
+            <ion-icon name="book-outline"></ion-icon>
+          </div>
+          <span>Daily Hadith</span>
+          <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+        </a>
+      </div>
+
+      <!-- Auth -->
+      <div class="menu-auth">
+        <ng-container *ngIf="!auth.isLoggedIn()">
+          <a class="nav-item auth-item" routerLink="/login" (click)="closeMenu()">
+            <div class="nav-icon-wrap login-icon">
+              <ion-icon name="log-in-outline"></ion-icon>
+            </div>
+            <span>Login</span>
+            <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+          </a>
+        </ng-container>
+        <ng-container *ngIf="auth.isLoggedIn()">
+          <div class="logged-user">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <span>{{ auth.getUser()?.email }}</span>
+          </div>
+          <a class="nav-item auth-item logout" (click)="logout()">
+            <div class="nav-icon-wrap logout-icon">
+              <ion-icon name="log-out-outline"></ion-icon>
+            </div>
+            <span>Logout</span>
+            <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+          </a>
+        </ng-container>
       </div>
 
       <!-- Menu Footer -->

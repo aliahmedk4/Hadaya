@@ -5,7 +5,7 @@
     </ion-buttons>
     <div class="toolbar-title">
       <span class="title-main">Add Donor</span>
-      <span class="title-sub">New Donation Entry</span>
+      <span class="title-sub">New Donor Profile</span>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -13,56 +13,89 @@
 <ion-content>
   <div class="form-body">
 
+    <!-- Identity -->
+    <p class="section-label">Identity</p>
     <div class="form-card">
 
-      <!-- Name -->
       <div class="field-group">
-        <label class="field-label">Donor Name</label>
+        <label class="field-label">Donor Name <span class="required">*</span></label>
         <div class="input-wrap">
           <ion-icon name="person-outline" class="input-icon"></ion-icon>
           <input type="text" [(ngModel)]="name" placeholder="e.g. Ahmed Khan" class="field-input" />
         </div>
       </div>
 
-      <!-- Amount -->
       <div class="field-group">
-        <label class="field-label">Amount (₹)</label>
+        <label class="field-label">Nickname</label>
         <div class="input-wrap">
-          <ion-icon name="cash-outline" class="input-icon"></ion-icon>
-          <input type="number" [(ngModel)]="amount" placeholder="e.g. 500" class="field-input" />
+          <ion-icon name="happy-outline" class="input-icon"></ion-icon>
+          <input type="text" [(ngModel)]="nickname" placeholder="e.g. Abu Bilal" class="field-input" />
         </div>
       </div>
 
-      <!-- Status -->
+      <div class="field-group toggle-group">
+        <div class="toggle-info">
+          <ion-icon name="eye-outline" class="toggle-icon"></ion-icon>
+          <div>
+            <span class="toggle-label">Show Nickname</span>
+            <span class="toggle-sub">Display nickname instead of full name</span>
+          </div>
+        </div>
+        <ion-toggle [(ngModel)]="showNickname" class="app-toggle"></ion-toggle>
+      </div>
+
+    </div>
+
+    <!-- Contact -->
+    <p class="section-label">Contact</p>
+    <div class="form-card">
+
       <div class="field-group">
-        <label class="field-label">Status</label>
-        <div class="status-toggle">
-          <div class="status-option" [class.active]="status === 'Paid'" (click)="status = 'Paid'">
-            <ion-icon name="checkmark-circle-outline"></ion-icon>
-            Paid
-          </div>
-          <div class="status-option pending" [class.active]="status === 'Pending'" (click)="status = 'Pending'">
-            <ion-icon name="time-outline"></ion-icon>
-            Pending
-          </div>
+        <label class="field-label">Mobile Number</label>
+        <div class="input-wrap">
+          <ion-icon name="call-outline" class="input-icon"></ion-icon>
+          <input type="tel" [(ngModel)]="mobile" placeholder="e.g. 9876543210" class="field-input" />
         </div>
       </div>
 
-      <!-- Date -->
       <div class="field-group">
-        <label class="field-label">Date</label>
-        <div class="input-wrap">
-          <ion-icon name="calendar-outline" class="input-icon"></ion-icon>
-          <input type="date" [(ngModel)]="date" class="field-input" />
+        <label class="field-label">Address</label>
+        <div class="input-wrap textarea-wrap">
+          <ion-icon name="location-outline" class="input-icon" style="align-self:flex-start;margin-top:2px"></ion-icon>
+          <textarea [(ngModel)]="address" placeholder="Street, Area, City" class="field-input field-textarea" rows="2"></textarea>
         </div>
       </div>
 
     </div>
 
-    <!-- Submit -->
+    <!-- Donation -->
+    <p class="section-label">Donation</p>
+    <div class="form-card">
+
+      <div class="field-group">
+        <label class="field-label">Pledge Amount (₹)</label>
+        <div class="input-wrap">
+          <ion-icon name="cash-outline" class="input-icon"></ion-icon>
+          <input type="number" [(ngModel)]="pledgeAmount" placeholder="e.g. 500" class="field-input" />
+        </div>
+      </div>
+
+      <div class="field-group toggle-group" style="margin-bottom:0">
+        <div class="toggle-info">
+          <ion-icon name="checkmark-circle-outline" class="toggle-icon active-icon"></ion-icon>
+          <div>
+            <span class="toggle-label">Active Donor</span>
+            <span class="toggle-sub">Donor is currently contributing</span>
+          </div>
+        </div>
+        <ion-toggle [(ngModel)]="isActive" class="app-toggle"></ion-toggle>
+      </div>
+
+    </div>
+
     <button class="submit-btn" (click)="submit()" [disabled]="saving">
       <ion-spinner name="crescent" *ngIf="saving"></ion-spinner>
-      <ion-icon name="add-circle-outline" *ngIf="!saving"></ion-icon>
+      <ion-icon name="person-add-outline" *ngIf="!saving"></ion-icon>
       <span>{{ saving ? 'Saving...' : 'Add Donor' }}</span>
     </button>
 

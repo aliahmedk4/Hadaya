@@ -19,6 +19,15 @@
   min-height: 100%;
 }
 
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--app-subtext);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 4px 8px;
+}
+
 .form-card {
   background: #fff;
   border-radius: 20px;
@@ -40,6 +49,8 @@
     display: block;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+
+    .required { color: #e74c3c; }
   }
 
   .input-wrap {
@@ -50,6 +61,8 @@
     border: 1px solid var(--app-border);
     border-radius: 14px;
     padding: 12px 14px;
+
+    &.textarea-wrap { align-items: flex-start; }
 
     .input-icon {
       font-size: 18px;
@@ -68,41 +81,44 @@
 
       &::placeholder { color: #bbb; }
     }
+
+    .field-textarea {
+      resize: none;
+      line-height: 1.5;
+    }
   }
 }
 
-.status-toggle {
+.toggle-group {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--app-bg);
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  padding: 12px 14px;
 
-  .status-option {
-    flex: 1;
+  .toggle-info {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 12px;
-    border-radius: 14px;
-    border: 1.5px solid var(--app-border);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--app-subtext);
-    cursor: pointer;
-    transition: all 0.2s;
+    gap: 10px;
 
-    ion-icon { font-size: 16px; }
-
-    &.active {
-      border-color: var(--app-green-dark);
-      background: var(--app-green-light);
+    .toggle-icon {
+      font-size: 20px;
       color: var(--app-green-dark);
+      flex-shrink: 0;
+
+      &.active-icon { color: #2da05a; }
     }
 
-    &.pending.active {
-      border-color: var(--app-gold);
-      background: var(--app-gold-light);
-      color: var(--app-gold);
-    }
+    .toggle-label { display: block; font-size: 14px; font-weight: 600; color: var(--app-text); }
+    .toggle-sub   { display: block; font-size: 11px; color: var(--app-subtext); margin-top: 1px; }
+  }
+
+  .app-toggle {
+    --track-background: var(--app-border);
+    --track-background-checked: var(--app-green-dark);
+    --handle-background: #fff;
   }
 }
 
@@ -125,8 +141,5 @@
 
   ion-icon { font-size: 20px; }
 
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
+  &:disabled { opacity: 0.7; cursor: not-allowed; }
 }
