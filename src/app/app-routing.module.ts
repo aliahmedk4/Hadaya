@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'donors',
@@ -17,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'add-donor',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./add-donor/add-donor.module').then(m => m.AddDonorPageModule)
   },
   {
@@ -25,6 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'add-payment/:donorId',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./add-payment/add-payment.module').then(m => m.AddPaymentPageModule)
   },
   {
@@ -34,6 +41,10 @@ const routes: Routes = [
   {
     path: 'reports',
     loadChildren: () => import('./reports/reports.module').then(m => m.ReportsPageModule)
+  },
+  {
+    path: 'hadith',
+    loadChildren: () => import('./hadith/hadith.module').then(m => m.HadithPageModule)
   },
 ];
 

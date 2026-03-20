@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +10,13 @@ import { MenuController } from '@ionic/angular';
   standalone: false,
 })
 export class AppComponent {
-  constructor(private menu: MenuController) {}
+  constructor(public auth: AuthService, private menu: MenuController, private router: Router) {}
 
-  closeMenu() {
+  closeMenu() { this.menu.close(); }
+
+  logout() {
+    this.auth.logout();
     this.menu.close();
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 }

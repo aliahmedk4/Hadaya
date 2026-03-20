@@ -14,16 +14,19 @@ import { environment } from '../../environments/environment';
 export class AddDonorPage {
 
   name = '';
-  amount: number | null = null;
-  status: 'Paid' | 'Pending' = 'Paid';
-  date = new Date().toISOString().split('T')[0];
+  nickname = '';
+  showNickname = false;
+  mobile = '';
+  pledgeAmount: number | null = null;
+  address = '';
+  isActive = true;
   saving = false;
 
   constructor(private router: Router, private toast: ToastController) {}
 
   async submit() {
-    if (!this.name.trim() || !this.amount || !this.date) {
-      this.showToast('Please fill all fields', 'warning');
+    if (!this.name.trim()) {
+      this.showToast('Donor name is required', 'warning');
       return;
     }
 
@@ -33,9 +36,12 @@ export class AddDonorPage {
       const db = getFirestore(app);
       await addDoc(collection(db, 'Donor'), {
         name: this.name.trim(),
-        amount: Number(this.amount),
-        status: this.status,
-        date: this.date,
+        nickname: this.nickname.trim(),
+        showNickname: this.showNickname,
+        mobile: this.mobile.trim(),
+        pledgeAmount: this.pledgeAmount ? Number(this.pledgeAmount) : 0,
+        address: this.address.trim(),
+        isActive: this.isActive,
       });
       this.showToast('Donor added successfully!', 'success');
       this.router.navigateByUrl('/donors');

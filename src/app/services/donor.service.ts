@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { initializeApp, getApps } from 'firebase/app';
 import {
   getFirestore, collection, query, orderBy,
-  onSnapshot, addDoc, Firestore, doc, getDoc
+  onSnapshot, addDoc, Firestore, doc, getDoc, getDocs
 } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -10,6 +10,13 @@ import { environment } from '../../environments/environment';
 export interface Donor {
   id?: string;
   name: string;
+  nickname?: string;
+  showNickname?: boolean;
+  mobile?: string;
+  pledgeAmount?: number;
+  address?: string;
+  isActive?: boolean;
+  // runtime-only: summed from payments subcollection
   amount: number;
   status: 'Paid' | 'Pending';
   date: string;
@@ -92,6 +99,35 @@ export class DonorService {
       );
       return () => unsub();
     });
+  }
+
+  async getCurrentMonthData(): Promise<{ total: number; donors: Donor[] }> {
+    const now = new Date();
+    const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const donorsSnap = await getDocs(collection(this.db, 'Donor'));
+    let total = 0;
+    const donors: Donor[] = [];
+    for (const d of donorsSnap.docs) {
+      const data = d.data();
+      const paymentsSnap = await getDocs(collection(this.db, 'Donor', d.id, 'payments'));
+      let donorMonthTotal = 0;
+      paymentsSnap.forEach(p => {
+        if ((p.data()['date'] ?? '').startsWith(month)) {
+          donorMonthTotal += Number(p.data()['amount'] ?? 0);
+        }
+      });
+      if (donorMonthTotal > 0) {
+        total += donorMonthTotal;
+        donors.push({
+          id: d.id,
+          name: data['name'] ?? data['Name'] ?? '',
+          amount: donorMonthTotal,
+          status: data['status'] ?? data['Status'] ?? 'Pending',
+          date: data['date'] ?? data['Date'] ?? '',
+        });
+      }
+    }
+    return { total, donors };
   }
 
   async addPayment(donorId: string, payment: Payment): Promise<void> {

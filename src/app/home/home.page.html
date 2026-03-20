@@ -8,11 +8,31 @@
       <span class="title-sub">Dashboard</span>
     </div>
     <ion-buttons slot="end">
-      <ion-button fill="clear">
+      <ion-button fill="clear" (click)="toggleNotifications()">
         <ion-icon name="notifications-outline" class="notif-icon"></ion-icon>
+        <span class="notif-badge" *ngIf="recentDonors.length > 0">{{ recentDonors.length }}</span>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+
+  <!-- Notification Panel -->
+  <div class="notif-panel" [class.open]="notifOpen">
+    <div class="notif-header">
+      <span>Notifications</span>
+      <ion-icon name="close-outline" (click)="toggleNotifications()"></ion-icon>
+    </div>
+    <div class="notif-list">
+      <div class="notif-item" *ngFor="let d of recentDonors">
+        <div class="notif-avatar">{{ d.name[0] }}</div>
+        <div class="notif-text">
+          <span class="notif-name">{{ d.name }}</span>
+          <span class="notif-msg">donated ₹{{ d.amount }} this month</span>
+        </div>
+        <span class="notif-pill" [class.paid]="d.status === 'Paid'" [class.pending]="d.status === 'Pending'">{{ d.status }}</span>
+      </div>
+      <p class="notif-empty" *ngIf="recentDonors.length === 0">No recent activity.</p>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content>
@@ -134,6 +154,20 @@
         <div>
           <h3 class="card-title">Charity Causes</h3>
           <p>Support active campaigns</p>
+        </div>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="charity-arrow"></ion-icon>
+    </div>
+
+    <!-- Daily Hadith Quick Link -->
+    <div class="section-card hadith-banner" routerLink="/hadith">
+      <div class="hadith-left">
+        <div class="hadith-icon-wrap">
+          <ion-icon name="book-outline"></ion-icon>
+        </div>
+        <div>
+          <h3 class="card-title">Daily Hadith</h3>
+          <p>Read today's hadith</p>
         </div>
       </div>
       <ion-icon name="chevron-forward-outline" class="charity-arrow"></ion-icon>
