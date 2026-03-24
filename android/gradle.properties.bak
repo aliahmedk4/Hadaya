@@ -22,5 +22,5 @@ org.gradle.jvmargs=-Xmx1536m
 android.useAndroidX=true
 MYAPP_UPLOAD_STORE_FILE=my-release-key.keystore
 MYAPP_UPLOAD_KEY_ALIAS=myalias
-MYAPP_UPLOAD_STORE_PASSWORD=aliK4@sheeba
-MYAPP_UPLOAD_KEY_PASSWORD=aliK4@sheeba
+MYAPP_UPLOAD_STORE_PASSWORD=yourpassword
+MYAPP_UPLOAD_KEY_PASSWORD=yourpassword
