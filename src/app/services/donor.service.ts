@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { initializeApp, getApps } from 'firebase/app';
 import {
   getFirestore, collection, query, orderBy,
-  onSnapshot, addDoc, Firestore, doc, getDoc, getDocs
+  onSnapshot, addDoc, Firestore, doc, getDoc, getDocs, updateDoc, deleteDoc
 } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -105,14 +105,20 @@ export class DonorService {
     const now = new Date();
     const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     const donorsSnap = await getDocs(collection(this.db, 'Donor'));
+    console.log(JSON.stringify(donorsSnap.docs));
     let total = 0;
     const donors: Donor[] = [];
     for (const d of donorsSnap.docs) {
       const data = d.data();
-      const paymentsSnap = await getDocs(collection(this.db, 'Donor', d.id, 'payments'));
+      const paymentsSnap = await getDocs(
+        query(collection(this.db, 'Donor', d.id, 'payments'), orderBy('date', 'desc'))
+      );
       let donorMonthTotal = 0;
+      let latestDate = '';
       paymentsSnap.forEach(p => {
-        if ((p.data()['date'] ?? '').startsWith(month)) {
+        const pDate = p.data()['date'] ?? '';
+        if (!latestDate) latestDate = pDate;
+        if (pDate.startsWith(month)) {
           donorMonthTotal += Number(p.data()['amount'] ?? 0);
         }
       });
@@ -123,10 +129,11 @@ export class DonorService {
           name: data['name'] ?? data['Name'] ?? '',
           amount: donorMonthTotal,
           status: data['status'] ?? data['Status'] ?? 'Pending',
-          date: data['date'] ?? data['Date'] ?? '',
+          date: latestDate,
         });
       }
     }
+    donors.sort((a, b) => b.date.localeCompare(a.date));
     return { total, donors };
   }
 
@@ -136,5 +143,17 @@ export class DonorService {
       date: payment.date,
       note: payment.note ?? '',
     });
+  }
+
+  async updatePayment(donorId: string, paymentId: string, payment: Partial<Payment>): Promise<void> {
+    await updateDoc(doc(this.db, 'Donor', donorId, 'payments', paymentId), {
+      amount: payment.amount,
+      date: payment.date,
+      note: payment.note ?? '',
+    });
+  }
+
+  async deletePayment(donorId: string, paymentId: string): Promise<void> {
+    await deleteDoc(doc(this.db, 'Donor', donorId, 'payments', paymentId));
   }
 }

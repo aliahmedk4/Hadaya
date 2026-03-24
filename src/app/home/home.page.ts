@@ -65,7 +65,10 @@ export class HomePage implements OnInit {
     });
     this.donorService.getCurrentMonthData().then(({ total, donors }) => {
       this.totalCollected = total;
-      this.recentDonors = donors.slice(0, 5);
+      this.recentDonors = donors
+        .filter(d => d.amount > 0)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 5);
     });
   }
 

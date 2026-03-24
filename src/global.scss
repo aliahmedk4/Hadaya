@@ -42,3 +42,35 @@ ion-item {
   --background: transparent;
   --inner-border-width: 0;
 }
+
+// ── Payment Action Sheet ──────────────────────────────
+.payment-action-sheet {
+  .action-sheet-container {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .action-sheet-group {
+    border-radius: 18px 18px 0 0 !important;
+    overflow: hidden;
+  }
+  .action-sheet-title {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--app-green-dark) !important;
+    letter-spacing: 0.3px;
+  }
+  .action-sheet-button {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    font-family: 'Poppins', sans-serif !important;
+    &.action-sheet-destructive {
+      color: #e53935 !important;
+    }
+  }
+}
+
+// ── Delete Confirm Alert ─────────────────────────────
+.delete-alert {
+  .alert-title { font-weight: 700 !important; font-size: 16px !important; }
+  .alert-message { font-size: 13px !important; color: var(--app-subtext) !important; }
+  .alert-delete-btn { color: #e53935 !important; font-weight: 700 !important; }
+}

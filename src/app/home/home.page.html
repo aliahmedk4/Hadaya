@@ -120,7 +120,8 @@
             <span class="donor-name">{{ donor.name }}</span>
             <span class="donor-amount">₹{{ donor.amount }}</span>
           </div>
-          <span class="status-pill" [class.paid]="donor.status === 'Paid'" [class.pending]="donor.status === 'Pending'">
+          <span class="status-pill paid">
+          <!-- </span> [class.paid]="donor.status === 'Paid'" [class.pending]="donor.status === 'Pending'"> -->
             {{ donor.status }}
           </span>
         </div>
