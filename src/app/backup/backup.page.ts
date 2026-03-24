@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { GoogleDriveService } from '../services/google-drive.service';
-import { DonorService } from '../services/donor.service';
-import { StaffService } from '../services/staff.service';
-import {
-  getFirestore, collection, getDocs, addDoc, doc, setDoc, deleteDoc, writeBatch
-} from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, setDoc } from 'firebase/firestore';
 import { getApps, initializeApp } from 'firebase/app';
 import { environment } from '../../environments/environment';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-backup',
@@ -60,10 +55,12 @@ export class BackupPage implements OnInit {
     const loading = await this.loadingCtrl.create({ message: 'Backing up to Google Drive…', spinner: 'crescent' });
     await loading.present();
     try {
-      const [donorsSnap, staffSnap, expensesSnap] = await Promise.all([
+      const [donorsSnap, staffSnap, expensesSnap, usersSnap, auditSnap] = await Promise.all([
         getDocs(collection(this.db, 'Donor')),
         getDocs(collection(this.db, 'Staff')),
         getDocs(collection(this.db, 'ExpensePayments')),
+        getDocs(collection(this.db, 'Users')),
+        getDocs(collection(this.db, 'auditLogs')),
       ]);
 
       const donors = [];
@@ -80,8 +77,10 @@ export class BackupPage implements OnInit {
         version: 1,
         backedUpAt: new Date().toISOString(),
         donors,
-        staff: staffSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+        staff:           staffSnap.docs.map(d => ({ id: d.id, ...d.data() })),
         expensePayments: expensesSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+        users:           usersSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+        auditLogs:       auditSnap.docs.map(d => ({ id: d.id, ...d.data() })),
       };
 
       await this.drive.backup(data);
@@ -131,6 +130,18 @@ export class BackupPage implements OnInit {
       for (const expense of (data.expensePayments || [])) {
         const { id, ...expenseData } = expense;
         await setDoc(doc(this.db, 'ExpensePayments', id), expenseData);
+      }
+
+      // Restore users
+      for (const user of (data.users || [])) {
+        const { id, ...userData } = user;
+        await setDoc(doc(this.db, 'Users', id), userData);
+      }
+
+      // Restore audit logs
+      for (const log of (data.auditLogs || [])) {
+        const { id, ...logData } = log;
+        await setDoc(doc(this.db, 'auditLogs', id), logData);
       }
 
       this.showToast('✅ Data restored successfully!', 'success');
