@@ -183,6 +183,17 @@
 
     &:last-child { border-bottom: none; }
 
+    &.tappable {
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 10px;
+      padding-left: 8px;
+      padding-right: 8px;
+      margin-left: -8px;
+      margin-right: -8px;
+      &:active { background: var(--app-green-light); }
+    }
+
     &.highlighted {
       .history-date { color: var(--app-green-dark); font-weight: 600; }
       .history-amount { color: var(--app-green-dark); }

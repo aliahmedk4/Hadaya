@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/donors" class="back-btn"></ion-back-button>
     </ion-buttons>
     <div class="toolbar-title">
-      <span class="title-main">Add Payment</span>
+      <span class="title-main">{{ isEditMode ? 'Edit Payment' : 'Add Payment' }}</span>
       <span class="title-sub">{{ donorName }}</span>
     </div>
   </ion-toolbar>
@@ -47,7 +47,7 @@
     <button class="submit-btn" (click)="submit()" [disabled]="saving">
       <ion-spinner name="crescent" *ngIf="saving"></ion-spinner>
       <ion-icon name="checkmark-circle-outline" *ngIf="!saving"></ion-icon>
-      <span>{{ saving ? 'Saving...' : 'Save Payment' }}</span>
+      <span>{{ saving ? 'Saving...' : (isEditMode ? 'Update Payment' : 'Save Payment') }}</span>
     </button>
 
   </div>

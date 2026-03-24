@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { DonorService } from '../services/donor.service';
 import { AuthService } from '../services/auth.service';
 
@@ -18,6 +19,9 @@ export class DonorsPage implements OnInit {
   constructor(
     private donorService: DonorService,
     private router: Router,
+    private actionSheet: ActionSheetController,
+    private alert: AlertController,
+    private toast: ToastController,
     public auth: AuthService
   ) {
     const now = new Date();
@@ -63,6 +67,63 @@ export class DonorsPage implements OnInit {
     this.router.navigate(['/add-payment', donor.id], {
       queryParams: { donorName: donor.name }
     });
+  }
+
+  async openPaymentActions(event: Event, donor: any, payment: any) {
+    event.stopPropagation();
+    const sheet = await this.actionSheet.create({
+      header: `₹${payment.amount}  ·  ${payment.date.split('T')[0]}`,
+      cssClass: 'payment-action-sheet',
+      buttons: [
+        {
+          text: 'Edit Payment',
+          icon: 'create-outline',
+          handler: () => {
+            this.router.navigate(['/add-payment', donor.id], {
+              queryParams: {
+                donorName: donor.name,
+                paymentId: payment.id,
+                amount: payment.amount,
+                date: payment.date,
+                note: payment.note ?? ''
+              }
+            });
+          }
+        },
+        {
+          text: 'Delete Payment',
+          icon: 'trash-outline',
+          role: 'destructive',
+          handler: () => this.confirmDelete(donor, payment)
+        },
+        { text: 'Cancel', role: 'cancel', icon: 'close-outline' }
+      ]
+    });
+    await sheet.present();
+  }
+
+  async confirmDelete(donor: any, payment: any) {
+    const a = await this.alert.create({
+      header: 'Delete Payment',
+      message: `Remove ₹${payment.amount} on ${payment.date}?`,
+      cssClass: 'delete-alert',
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          cssClass: 'alert-delete-btn',
+          handler: async () => {
+            try {
+              await this.donorService.deletePayment(donor.id, payment.id);
+              const t = await this.toast.create({ message: 'Payment deleted', duration: 2000, color: 'danger', position: 'bottom' });
+              t.present();
+            } catch { }
+          }
+        }
+      ]
+    });
+    await a.present();
   }
 
   logout() {

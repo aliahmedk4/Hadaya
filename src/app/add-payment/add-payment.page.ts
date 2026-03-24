@@ -13,6 +13,8 @@ export class AddPaymentPage implements OnInit {
 
   donorId = '';
   donorName = '';
+  paymentId = '';
+  isEditMode = false;
   amount: number | null = null;
   date = new Date().toISOString().split('T')[0];
   note = '';
@@ -28,6 +30,13 @@ export class AddPaymentPage implements OnInit {
   ngOnInit() {
     this.donorId = this.route.snapshot.paramMap.get('donorId') ?? '';
     this.donorName = this.route.snapshot.queryParamMap.get('donorName') ?? 'Donor';
+    this.paymentId = this.route.snapshot.queryParamMap.get('paymentId') ?? '';
+    if (this.paymentId) {
+      this.isEditMode = true;
+      this.amount = Number(this.route.snapshot.queryParamMap.get('amount'));
+      this.date = (this.route.snapshot.queryParamMap.get('date') ?? this.date).split('T')[0];
+      this.note = this.route.snapshot.queryParamMap.get('note') ?? '';
+    }
   }
 
   async submit() {
@@ -38,12 +47,21 @@ export class AddPaymentPage implements OnInit {
 
     this.saving = true;
     try {
-      await this.donorService.addPayment(this.donorId, {
-        amount: Number(this.amount),
-        date: this.date,
-        note: this.note,
-      });
-      this.showToast('Payment saved!', 'success');
+      if (this.isEditMode) {
+        await this.donorService.updatePayment(this.donorId, this.paymentId, {
+          amount: Number(this.amount),
+          date: `${this.date}T${new Date().toTimeString().split(' ')[0]}`,
+          note: this.note,
+        });
+        this.showToast('Payment updated!', 'success');
+      } else {
+        await this.donorService.addPayment(this.donorId, {
+          amount: Number(this.amount),
+          date: `${this.date}T${new Date().toTimeString().split(' ')[0]}`,
+          note: this.note,
+        });
+        this.showToast('Payment saved!', 'success');
+      }
       this.router.navigateByUrl('/donors');
     } catch (err) {
       console.error(err);
