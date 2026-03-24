@@ -70,6 +70,13 @@
           <span>Expenses</span>
           <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
         </a>
+        <a class="nav-item" routerLink="/backup" routerLinkActive="nav-active" (click)="closeMenu()" *ngIf="auth.isLoggedIn()">
+          <div class="nav-icon-wrap">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+          </div>
+          <span>Backup & Restore</span>
+          <ion-icon name="chevron-forward-outline" class="nav-arrow"></ion-icon>
+        </a>
       </div>
       <div class="menu-auth">
         <ng-container *ngIf="!auth.isLoggedIn()">

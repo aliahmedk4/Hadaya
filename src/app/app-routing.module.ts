@@ -61,6 +61,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./expenses/expenses.module').then(m => m.ExpensesPageModule)
   },
+  {
+    path: 'backup',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./backup/backup.module').then(m => m.BackupPageModule)
+  },
 ];
 
 @NgModule({
