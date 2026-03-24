@@ -48,7 +48,7 @@ export class HomePage implements OnInit {
   staffList = [
     { role: 'Imam',      amount: 5850, icon: 'book-outline' },
     { role: 'Muezzin',   amount: 5850, icon: 'megaphone-outline' },
-    { role: 'Cleaner',   amount: 5850, icon: 'sparkles-outline' },
+    { role: 'Caretaker',   amount: 5850, icon: 'sparkles-outline' },
     { role: 'Caretaker', amount: 5850, icon: 'shield-checkmark-outline' },
   ];
 

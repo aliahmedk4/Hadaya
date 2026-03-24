@@ -19,21 +19,36 @@
   --ion-color-warning-shade: #b56d08;
   --ion-color-warning-tint: #e8921c;
 
-  --ion-background-color: #eef2f0;
-  --ion-card-background: #ffffff;
+  --ion-background-color: #f0f4f2;
+  --ion-card-background:  #ffffff;
 
+  // App tokens
   --app-green-dark:   #1a6b3c;
   --app-green-mid:    #228b4e;
   --app-green-light:  #d6ede1;
   --app-gold:         #c9920a;
   --app-gold-light:   #fdf3dc;
   --app-surface:      #ffffff;
-  --app-bg:           #eef2f0;
-  --app-text:         #1a1a2e;
-  --app-subtext:      #6b7280;
+  --app-bg:           #f0f4f2;
+  --app-text:         #0d1f14;
+  --app-subtext:      #64748b;
   --app-border:       #e2e8e4;
 
-  --card-shadow: 0 4px 20px rgba(26, 107, 60, 0.10);
+  // Design system tokens (matching MyTailorBook pattern)
+  --t-gradient:   linear-gradient(135deg, #0d2818 0%, #1a6b3c 55%, #2da05a 100%);
+  --t-surface:    #ffffff;
+  --t-bg:         #f0f4f2;
+  --t-text:       #0d1f14;
+  --t-subtext:    #64748b;
+  --t-border:     #e2e8e4;
+  --t-shadow-sm:  0 2px 8px  rgba(26,107,60,0.08);
+  --t-shadow-md:  0 4px 20px rgba(26,107,60,0.12);
+  --t-shadow-lg:  0 8px 32px rgba(26,107,60,0.18);
+  --t-radius-sm:  12px;
+  --t-radius-md:  18px;
+  --t-radius-lg:  24px;
+
+  --card-shadow: var(--t-shadow-md);
   --card-radius: 20px;
 }
 
@@ -48,14 +63,6 @@ ion-toolbar {
   --box-shadow: none !important;
 }
 
-ion-header {
-  background: #ffffff;
-}
-
-ion-footer {
-  padding-bottom: env(safe-area-inset-bottom) !important;
-}
-
-ion-content {
-  --background: var(--app-bg);
-}
+ion-header  { background: transparent; }
+ion-footer  { padding-bottom: env(safe-area-inset-bottom) !important; }
+ion-content { --background: var(--t-bg); }

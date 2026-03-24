@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.hadaya.app;
 
 import com.getcapacitor.BridgeActivity;
 

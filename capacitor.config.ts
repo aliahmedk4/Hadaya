@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.sadaqahhub.app',
-  appName: 'SadaqahHub',
+  appId: 'com.hadaya.app',
+  appName: 'Hadaya',
   webDir: 'www',
   plugins: {
     StatusBar: {

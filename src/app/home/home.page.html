@@ -4,7 +4,7 @@
       <ion-menu-button class="menu-btn"></ion-menu-button>
     </ion-buttons>
     <div class="toolbar-title">
-      <span class="title-main">SadaqahHub</span>
+      <span class="title-main">Hadaya</span>
       <span class="title-sub">Dashboard</span>
     </div>
     <ion-buttons slot="end">
@@ -120,9 +120,7 @@
             <span class="donor-name">{{ donor.name }}</span>
             <span class="donor-amount">₹{{ donor.amount }}</span>
           </div>
-          <span class="status-pill" [class.paid]="donor.status === 'Paid'" [class.pending]="donor.status === 'Pending'">
-            {{ donor.status }}
-          </span>
+          <span class="status-pill paid">PAID</span>
         </div>
         <p class="empty-msg" *ngIf="recentDonors.length === 0">No donors yet.</p>
       </div>

@@ -154,14 +154,9 @@
     cursor: pointer;
 
     .stat-icon-wrap {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 40px; height: 40px; border-radius: 12px;
       background: rgba(255,255,255,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
+      display: flex; align-items: center; justify-content: center;
       ion-icon { font-size: 20px; color: #fff; }
     }
 
@@ -211,7 +206,6 @@
   .progress-track {
     height: 10px; background: var(--app-green-light);
     border-radius: 10px; overflow: hidden; margin-bottom: 10px;
-
     .progress-fill { height: 100%; background: linear-gradient(90deg, #1a6b3c, #2da05a); border-radius: 10px; }
   }
 
@@ -319,3 +313,5 @@
     p { font-size: 12px; color: var(--app-subtext); }
   }
 }
+
+.empty-msg { text-align: center; font-size: 13px; color: var(--app-subtext); padding: 16px 0; }

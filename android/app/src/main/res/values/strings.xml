@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">SadaqahHub</string>
-    <string name="title_activity_main">SadaqahHub</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Hadaya</string>
+    <string name="title_activity_main">Hadaya</string>
+    <string name="package_name">com.hadaya.app</string>
+    <string name="custom_url_scheme">com.hadaya.app</string>
 </resources>

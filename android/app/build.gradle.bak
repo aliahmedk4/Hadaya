@@ -46,7 +46,7 @@ android {
 	
 	applicationVariants.all { variant ->
     variant.outputs.all { output ->
-        def appName = "Hadaya"
+        def appName = "MyTailorBook"
         def versionName = variant.versionName
         def buildType = variant.buildType.name
 

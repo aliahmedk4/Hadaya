@@ -1,5 +1,5 @@
 {
-  "name": "SadaqahHub",
+  "name": "Hadaya",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://github.com/aliahmedk4/Hadaya",
@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "deploy": "ng build --configuration production --base-href=/Hadaya/ --deploy-url=/Hadaya/ && npx angular-cli-ghpages --dir=www"
+    "deploy": "ng build --configuration production && npx angular-cli-ghpages --dir=www --repo=https://github.com/aliahmedk4/Hadaya.git --branch=gh-pages --name=Hadaya --no-silent"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +23,7 @@
     "@angular/platform-browser": "^20.0.0",
     "@angular/platform-browser-dynamic": "^20.0.0",
     "@angular/router": "^20.0.0",
-    "@angular/service-worker": "^20.0.0",
+    "@angular/service-worker": "^20.3.18",
     "@capacitor/android": "^8.2.0",
     "@capacitor/app": "8.0.1",
     "@capacitor/core": "8.2.0",
