@@ -4,6 +4,8 @@ import { ToastController } from '@ionic/angular';
 import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { environment } from '../../environments/environment';
+import { AuditService } from '../services/audit.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-add-donor',
@@ -22,7 +24,12 @@ export class AddDonorPage {
   isActive = true;
   saving = false;
 
-  constructor(private router: Router, private toast: ToastController) {}
+  constructor(
+    private router: Router,
+    private toast: ToastController,
+    private audit: AuditService,
+    private auth: AuthService
+  ) {}
 
   async submit() {
     if (!this.name.trim()) {
@@ -34,7 +41,7 @@ export class AddDonorPage {
     try {
       const app = getApps().length ? getApps()[0] : initializeApp(environment.firebase);
       const db = getFirestore(app);
-      await addDoc(collection(db, 'Donor'), {
+      const ref = await addDoc(collection(db, 'Donor'), {
         name: this.name.trim(),
         nickname: this.nickname.trim(),
         showNickname: this.showNickname,
@@ -42,6 +49,13 @@ export class AddDonorPage {
         pledgeAmount: this.pledgeAmount ? Number(this.pledgeAmount) : 0,
         address: this.address.trim(),
         isActive: this.isActive,
+      });
+      await this.audit.logAudit({
+        action: 'DONOR_CREATED',
+        donorId: ref.id,
+        donorName: this.name.trim(),
+        details: `Donor "${this.name.trim()}" created`,
+        performedBy: this.auth.getUser()?.username ?? 'unknown',
       });
       this.showToast('Donor added successfully!', 'success');
       this.router.navigateByUrl('/donors');

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { DonorService } from '../services/donor.service';
+import { AuditService } from '../services/audit.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-add-payment',
@@ -24,6 +26,8 @@ export class AddPaymentPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private donorService: DonorService,
+    private audit: AuditService,
+    private auth: AuthService,
     private toast: ToastController
   ) {}
 
@@ -53,12 +57,26 @@ export class AddPaymentPage implements OnInit {
           date: `${this.date}T${new Date().toTimeString().split(' ')[0]}`,
           note: this.note,
         });
+        await this.audit.logAudit({
+          action: 'PAYMENT_UPDATED',
+          donorId: this.donorId,
+          donorName: this.donorName,
+          details: `Payment updated: ₹${this.amount} on ${this.date}${this.note ? ' · ' + this.note : ''}`,
+          performedBy: this.auth.getUser()?.username ?? 'unknown',
+        });
         this.showToast('Payment updated!', 'success');
       } else {
         await this.donorService.addPayment(this.donorId, {
           amount: Number(this.amount),
           date: `${this.date}T${new Date().toTimeString().split(' ')[0]}`,
           note: this.note,
+        });
+        await this.audit.logAudit({
+          action: 'PAYMENT_ADDED',
+          donorId: this.donorId,
+          donorName: this.donorName,
+          details: `Payment added: ₹${this.amount} on ${this.date}${this.note ? ' · ' + this.note : ''}`,
+          performedBy: this.auth.getUser()?.username ?? 'unknown',
         });
         this.showToast('Payment saved!', 'success');
       }

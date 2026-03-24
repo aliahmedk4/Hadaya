@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { DonorService, Donor } from '../services/donor.service';
+import { StaffService, Staff } from '../services/staff.service';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +36,7 @@ import { DonorService, Donor } from '../services/donor.service';
 export class HomePage implements OnInit {
 
   private donorService = inject(DonorService);
+  private staffService = inject(StaffService);
 
   recentDonors: Donor[] = [];
   totalCollected = 0;
@@ -45,14 +47,10 @@ export class HomePage implements OnInit {
 
   toggleNotifications() { this.notifOpen = !this.notifOpen; }
 
-  staffList = [
-    { role: 'Imam',      amount: 5850, icon: 'book-outline' },
-    { role: 'Muezzin',   amount: 5850, icon: 'megaphone-outline' },
-    { role: 'Caretaker',   amount: 5850, icon: 'sparkles-outline' },
-    { role: 'Caretaker', amount: 5850, icon: 'shield-checkmark-outline' },
-  ];
+  staffList: Staff[] = [];
 
   ngOnInit() {
+    this.staffService.getStaff().subscribe(staff => this.staffList = staff);
     this.donorService.getAllDonors().subscribe({
       next: (donors) => {
         this.totalDonors = donors.length;

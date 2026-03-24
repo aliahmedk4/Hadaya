@@ -1,0 +1,89 @@
+.audit-toolbar {
+  --background: #ffffff;
+
+  ion-menu-button { --color: var(--app-green-dark); }
+
+  .toolbar-title {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+    .title-main { font-size: 16px; font-weight: 700; color: var(--app-text); }
+    .title-sub  { font-size: 11px; color: var(--app-subtext); font-weight: 400; }
+  }
+}
+
+.audit-body {
+  padding: 16px;
+  background: var(--app-bg);
+  min-height: 100%;
+}
+
+.log-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(26, 107, 60, 0.07);
+
+  .log-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+
+    &.green  { background: var(--app-green-light); color: var(--app-green-dark); }
+    &.blue   { background: #e8f0fe; color: #1a73e8; }
+    &.orange { background: #fff3e0; color: #e65100; }
+    &.red    { background: #fce8e6; color: #c62828; }
+  }
+
+  .log-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .log-action {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--app-text);
+    }
+
+    .log-donor {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--app-green-dark);
+    }
+
+    .log-details {
+      font-size: 12px;
+      color: var(--app-subtext);
+      margin-top: 1px;
+    }
+
+    .log-meta {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 6px;
+
+      ion-icon { font-size: 11px; color: #bbb; }
+      span { font-size: 11px; color: #bbb; }
+    }
+  }
+}
+
+.empty-msg {
+  text-align: center;
+  font-size: 14px;
+  color: var(--app-subtext);
+  padding: 40px 0;
+}

@@ -1,0 +1,147 @@
+.expenses-toolbar {
+  --background: #ffffff;
+  ion-menu-button { --color: var(--app-green-dark); }
+  .toolbar-title {
+    display: flex; flex-direction: column; line-height: 1.2;
+    .title-main { font-size: 16px; font-weight: 700; color: var(--app-text); }
+    .title-sub  { font-size: 11px; color: var(--app-subtext); font-weight: 400; }
+  }
+  .add-btn { --color: var(--app-green-dark); font-size: 26px; }
+}
+
+.filter-bar {
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; padding: 10px 18px 14px;
+  border-bottom: 1px solid var(--app-border);
+
+  .filter-icon  { font-size: 18px; color: var(--app-green-dark); }
+  .filter-label { font-size: 13px; font-weight: 500; color: var(--app-subtext); flex: 1; }
+  .month-input {
+    border: 1px solid var(--app-border); border-radius: 10px;
+    padding: 5px 10px; font-size: 13px; font-family: 'Poppins', sans-serif;
+    color: var(--app-green-dark); font-weight: 600;
+    background: var(--app-green-light); outline: none; cursor: pointer;
+  }
+}
+
+.expenses-body {
+  padding: 16px;
+  background: var(--app-bg);
+  min-height: 100%;
+}
+
+.summary-card {
+  background: linear-gradient(145deg, #c0392b, #e74c3c);
+  border-radius: 20px; padding: 20px;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(192, 57, 43, 0.3);
+
+  .summary-icon-wrap {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    ion-icon { font-size: 26px; color: #fff; }
+  }
+
+  .summary-label  { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+  .summary-amount { font-size: 26px; font-weight: 700; color: #fff; }
+
+  .summary-right {
+    margin-left: auto; text-align: right;
+    .summary-count { font-size: 13px; color: rgba(255,255,255,0.9); font-weight: 600; }
+  }
+}
+
+// ── Expense Card ───────────────────────────────────────
+.expense-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 16px rgba(26, 107, 60, 0.08);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+
+  .expense-left {
+    display: flex; align-items: center; gap: 12px;
+
+    .expense-icon {
+      width: 44px; height: 44px; border-radius: 14px;
+      background: #fce8e6;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      ion-icon { font-size: 22px; color: #c62828; }
+    }
+
+    .expense-info {
+      display: flex; flex-direction: column;
+      .expense-name { font-size: 14px; font-weight: 600; color: var(--app-text); }
+      .expense-role { font-size: 12px; color: var(--app-subtext); margin-top: 2px; }
+    }
+  }
+
+  .expense-right {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+
+    .expense-total { font-size: 16px; font-weight: 700; color: #c62828; }
+
+    .status-pill {
+      font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+      &.paid    { background: var(--app-green-light); color: var(--app-green-dark); }
+      &.partial { background: #fff3e0; color: #e65100; }
+    }
+  }
+
+  .payment-breakdown {
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f5f5f5;
+
+    .breakdown-item {
+      display: flex; align-items: center; gap: 8px; padding: 4px 0;
+
+      .dot { font-size: 6px; color: #c62828; flex-shrink: 0; }
+      .breakdown-date  { font-size: 12px; color: var(--app-subtext); }
+      .breakdown-note  { font-size: 11px; color: #bbb; flex: 1; }
+      .breakdown-amount { font-size: 13px; font-weight: 600; color: var(--app-text); margin-left: auto; }
+    }
+  }
+}
+
+// ── Empty State ────────────────────────────────────────
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 60px 20px; gap: 12px;
+
+  ion-icon { font-size: 52px; color: #ddd; }
+  p { font-size: 14px; color: var(--app-subtext); }
+
+  .add-first-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, #1a6b3c, #2da05a);
+    color: #fff; border: none; border-radius: 14px;
+    padding: 12px 24px; font-size: 14px; font-weight: 700;
+    font-family: 'Poppins', sans-serif; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(26, 107, 60, 0.3);
+    ion-icon { font-size: 18px; }
+  }
+}
+
+// ── Footer ─────────────────────────────────────────────
+.total-footer {
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+
+  .total-left {
+    display: flex; align-items: center; gap: 8px;
+    ion-icon { font-size: 18px; color: rgba(255,255,255,0.8); }
+    span { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); font-family: 'Poppins', sans-serif; }
+  }
+
+  .total-amount { font-size: 20px; font-weight: 700; color: #fff; font-family: 'Poppins', sans-serif; }
+}

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { DonorService } from '../services/donor.service';
 import { AuthService } from '../services/auth.service';
+import { AuditService } from '../services/audit.service';
 
 @Component({
   selector: 'app-donors',
@@ -22,6 +23,7 @@ export class DonorsPage implements OnInit {
     private actionSheet: ActionSheetController,
     private alert: AlertController,
     private toast: ToastController,
+    private auditService: AuditService,
     public auth: AuthService
   ) {
     const now = new Date();
@@ -116,6 +118,13 @@ export class DonorsPage implements OnInit {
           handler: async () => {
             try {
               await this.donorService.deletePayment(donor.id, payment.id);
+              await this.auditService.logAudit({
+                action: 'PAYMENT_DELETED',
+                donorId: donor.id,
+                donorName: donor.name,
+                details: `Payment deleted: ₹${payment.amount} on ${payment.date.split('T')[0]}`,
+                performedBy: this.auth.getUser()?.username ?? 'unknown',
+              });
               const t = await this.toast.create({ message: 'Payment deleted', duration: 2000, color: 'danger', position: 'bottom' });
               t.present();
             } catch { }

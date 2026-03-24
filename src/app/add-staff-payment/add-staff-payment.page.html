@@ -1,0 +1,80 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="add-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/staff-payments" class="back-btn"></ion-back-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">{{ isEditMode ? 'Edit Payment' : 'Staff Payment' }}</span>
+      <span class="title-sub">{{ selectedStaff?.name || 'Select Staff' }}</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-body">
+    <div class="form-card">
+
+      <!-- Staff Selector -->
+      <div class="field-group">
+        <label class="field-label">Staff Member</label>
+        <div class="input-wrap select-wrap">
+          <ion-icon name="people-outline" class="input-icon"></ion-icon>
+          <select [(ngModel)]="selectedStaffId" class="field-input field-select" [disabled]="isEditMode">
+            <option value="" disabled>Select staff member</option>
+            <option *ngFor="let s of staffList" [value]="s.id">
+              {{ s.name }} — {{ s.role }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Amount -->
+      <div class="field-group">
+        <label class="field-label">Amount (₹)</label>
+        <div class="input-wrap">
+          <ion-icon name="cash-outline" class="input-icon"></ion-icon>
+          <input type="number" [(ngModel)]="amount"
+            placeholder="e.g. 5850"
+            class="field-input" />
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div class="field-group">
+        <label class="field-label">Date</label>
+        <div class="input-wrap">
+          <ion-icon name="calendar-outline" class="input-icon"></ion-icon>
+          <input type="date" [(ngModel)]="date" class="field-input" />
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="field-group">
+        <label class="field-label">Note (optional)</label>
+        <div class="input-wrap">
+          <ion-icon name="create-outline" class="input-icon"></ion-icon>
+          <input type="text" [(ngModel)]="note" placeholder="e.g. March salary" class="field-input" />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Selected Staff Preview -->
+    <div class="staff-preview" *ngIf="selectedStaff">
+      <div class="preview-icon">
+        <ion-icon [name]="selectedStaff.icon"></ion-icon>
+      </div>
+      <div class="preview-info">
+        <span class="preview-name">{{ selectedStaff.name }}</span>
+        <span class="preview-role">{{ selectedStaff.role }}</span>
+      </div>
+    </div>
+
+    <button class="submit-btn" (click)="submit()" [disabled]="saving">
+      <ion-spinner name="crescent" *ngIf="saving"></ion-spinner>
+      <ion-icon name="checkmark-circle-outline" *ngIf="!saving"></ion-icon>
+      <span>{{ saving ? 'Saving...' : (isEditMode ? 'Update Payment' : 'Save Payment') }}</span>
+    </button>
+
+  </div>
+</ion-content>

@@ -129,22 +129,20 @@
     <!-- Staff Distribution -->
     <div class="section-card">
       <div class="card-header-row">
-        <h3 class="card-title">Staff Distribution</h3>
+        <h3 class="card-title">Staff</h3>
         <a routerLink="/staff" class="see-all">See all</a>
       </div>
       <div class="staff-grid">
-        <div class="staff-item" *ngFor="let s of staffList">
-          <div class="staff-icon-wrap">
+        <div class="staff-chip" *ngFor="let s of staffList">
+          <div class="staff-chip-icon">
             <ion-icon [name]="s.icon"></ion-icon>
           </div>
-          <p class="staff-role">{{ s.role }}</p>
-          <p class="staff-pay">₹{{ s.amount }}</p>
+          <span class="staff-chip-name">{{ s.name }}</span>
         </div>
       </div>
     </div>
 
-    <!-- Charity Quick Link -->
-    <div class="section-card charity-banner" routerLink="/charity">
+    <!-- <div class="section-card charity-banner" routerLink="/charity">
       <div class="charity-left">
         <div class="charity-icon-wrap">
           <ion-icon name="heart-outline"></ion-icon>
@@ -155,7 +153,7 @@
         </div>
       </div>
       <ion-icon name="chevron-forward-outline" class="charity-arrow"></ion-icon>
-    </div>
+    </div> -->
 
     <!-- Daily Hadith Quick Link -->
     <div class="section-card hadith-banner" routerLink="/hadith">

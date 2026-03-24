@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { StaffService } from './services/staff.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,14 @@ import { AuthService } from './services/auth.service';
   standalone: false,
 })
 export class AppComponent {
-  constructor(public auth: AuthService, private menu: MenuController, private router: Router) {}
+  constructor(
+    public auth: AuthService,
+    private menu: MenuController,
+    private router: Router,
+    private staffService: StaffService
+  ) {
+    this.staffService.initStaff();
+  }
 
   closeMenu() { this.menu.close(); }
 

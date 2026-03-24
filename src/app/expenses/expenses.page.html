@@ -1,0 +1,104 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="expenses-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="toolbar-title">
+      <span class="title-main">Expenses</span>
+      <span class="title-sub">Expense Tracker</span>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="add-btn" (click)="goAddPayment()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="filter-bar">
+    <ion-icon name="calendar-outline" class="filter-icon"></ion-icon>
+    <span class="filter-label">Month</span>
+    <input type="month" [(ngModel)]="selectedMonth" (change)="onMonthChange()" class="month-input" />
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="expenses-body">
+
+    <!-- Summary -->
+    <div class="summary-card" *ngIf="!loading">
+      <div class="summary-icon-wrap">
+        <ion-icon name="trending-down-outline"></ion-icon>
+      </div>
+      <div>
+        <p class="summary-label">Total Expenses</p>
+        <h2 class="summary-amount">₹{{ grandTotal() }}</h2>
+      </div>
+      <div class="summary-right">
+        <p class="summary-label">{{ selectedMonth }}</p>
+        <p class="summary-count">{{ expenses.length }} paid</p>
+      </div>
+    </div>
+
+    <!-- Skeleton -->
+    <ng-container *ngIf="loading">
+      <div class="expense-card" *ngFor="let i of [1,2,3]">
+        <ion-skeleton-text animated style="width:44px;height:44px;border-radius:14px;flex-shrink:0;"></ion-skeleton-text>
+        <div style="flex:1;padding-left:12px">
+          <ion-skeleton-text animated style="width:120px;height:14px;border-radius:6px;margin-bottom:6px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width:80px;height:11px;border-radius:6px;"></ion-skeleton-text>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Expense Cards -->
+    <ng-container *ngIf="!loading">
+      <div class="expense-card" *ngFor="let e of expenses">
+        <div class="expense-left">
+          <div class="expense-icon">
+            <ion-icon [name]="e.icon"></ion-icon>
+          </div>
+          <div class="expense-info">
+            <span class="expense-name">{{ e.name }}</span>
+            <span class="expense-role">{{ e.role }}</span>
+          </div>
+        </div>
+        <div class="expense-right">
+          <span class="expense-total">₹{{ e.monthTotal }}</span>
+          <span class="status-pill" [class.paid]="e.monthTotal > 0" [class.partial]="e.monthTotal === 0">
+            {{ e.monthTotal > 0 ? 'Paid' : 'None' }}
+          </span>
+        </div>
+
+        <!-- Payment breakdown -->
+        <div class="payment-breakdown" *ngIf="e.payments.length > 1">
+          <div class="breakdown-item" *ngFor="let p of e.payments">
+            <ion-icon name="ellipse" class="dot"></ion-icon>
+            <span class="breakdown-date">{{ p.date.split('T')[0] }}</span>
+            <span class="breakdown-note" *ngIf="p.note">{{ p.note }}</span>
+            <span class="breakdown-amount">₹{{ p.amount }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="expenses.length === 0">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <p>No expenses for {{ selectedMonth }}</p>
+        <button class="add-first-btn" (click)="goAddPayment()">
+          <ion-icon name="add-outline"></ion-icon>
+          Add Expense Payment
+        </button>
+      </div>
+    </ng-container>
+
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="!loading && expenses.length > 0">
+  <div class="total-footer">
+    <div class="total-left">
+      <ion-icon name="trending-down-outline"></ion-icon>
+      <span>{{ selectedMonth }}</span>
+    </div>
+    <span class="total-amount">₹{{ grandTotal() }}</span>
+  </div>
+</ion-footer>

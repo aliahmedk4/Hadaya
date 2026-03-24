@@ -5,41 +5,105 @@
     </ion-buttons>
     <div class="toolbar-title">
       <span class="title-main">Staff</span>
-      <span class="title-sub">Salary Distribution</span>
+      <span class="title-sub">Staff Members</span>
     </div>
+    <ion-buttons slot="end" *ngIf="auth.isLoggedIn()">
+      <ion-button fill="clear" class="add-btn" (click)="openStaffForm()">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
+  <div class="filter-bar">
+    <ion-icon name="calendar-outline" class="filter-icon"></ion-icon>
+    <span class="filter-label">Month</span>
+    <input type="month" [(ngModel)]="selectedMonth" class="month-input" />
+  </div>
 </ion-header>
 
 <ion-content>
   <div class="staff-body">
 
+    <!-- Summary -->
     <div class="summary-card">
       <div class="summary-icon-wrap">
         <ion-icon name="wallet-outline"></ion-icon>
       </div>
       <div>
-        <p class="summary-label">Total Monthly Payout</p>
-        <h2 class="summary-amount">₹{{ totalPayout() }}</h2>
+        <p class="summary-label">Total Monthly Paid</p>
+        <h2 class="summary-amount">₹{{ totalPaid() }}</h2>
       </div>
     </div>
 
-    <div class="staff-card" *ngFor="let s of staffList">
-      <div class="staff-left">
-        <div class="staff-icon-wrap">
-          <ion-icon [name]="s.icon"></ion-icon>
-        </div>
-        <div class="staff-info">
-          <span class="staff-name">{{ s.name }}</span>
-          <span class="staff-role">{{ s.role }}</span>
+    <!-- Skeleton -->
+    <ng-container *ngIf="loading">
+      <div class="staff-card" *ngFor="let i of [1,2,3,4]">
+        <ion-skeleton-text animated style="width:44px;height:44px;border-radius:14px;flex-shrink:0;"></ion-skeleton-text>
+        <div style="flex:1;padding-left:12px">
+          <ion-skeleton-text animated style="width:120px;height:14px;border-radius:6px;margin-bottom:6px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width:80px;height:11px;border-radius:6px;"></ion-skeleton-text>
         </div>
       </div>
-      <div class="staff-right">
-        <span class="staff-amount">₹{{ s.amount }}</span>
-        <span class="status-pill" [class.paid]="s.status === 'Paid'" [class.pending]="s.status === 'Pending'">
-          {{ s.status }}
-        </span>
-      </div>
-    </div>
+    </ng-container>
+
+    <!-- Staff Cards -->
+    <ng-container *ngIf="!loading">
+      <ng-container *ngFor="let s of staffList">
+
+        <div class="staff-card" (click)="auth.isLoggedIn() && toggle(s)">
+          <div class="staff-left">
+            <div class="staff-icon-wrap">
+              <ion-icon [name]="s.icon"></ion-icon>
+            </div>
+            <div class="staff-info">
+              <span class="staff-name">{{ s.name }}</span>
+              <span class="staff-role">{{ s.role }} · {{ selectedMonth }} · ₹{{ paidAmount(s) }}</span>
+            </div>
+          </div>
+          <div class="staff-right">
+            <ng-container *ngIf="auth.isLoggedIn()">
+              <span class="status-pill" [class.paid]="paidAmount(s) > 0" [class.pending]="paidAmount(s) === 0">
+                {{ paidAmount(s) > 0 ? 'Paid' : 'Pending' }}
+              </span>
+              <button class="pay-btn" (click)="goAddPayment($event, s)">
+                <ion-icon name="add-outline"></ion-icon>
+                Pay
+              </button>
+              <button class="edit-btn" (click)="openStaffActions($event, s)">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+              </button>
+              <ion-icon [name]="s.expanded ? 'chevron-up' : 'chevron-down'" class="chevron"></ion-icon>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Expanded Payments -->
+        <div class="history-wrap" *ngIf="s.expanded && auth.isLoggedIn()">
+          <p class="history-empty" *ngIf="s.payments.length === 0">No payments yet.</p>
+          <div class="history-item tappable" *ngFor="let p of s.payments"
+            [class.highlighted]="p.date.startsWith(selectedMonth)"
+            (click)="openPaymentActions($event, s, p)">
+            <div class="history-dot" [class.active]="p.date.startsWith(selectedMonth)"></div>
+            <div class="history-info">
+              <span class="history-date">{{ p.date.split('T')[0] }}</span>
+              <span class="history-note" *ngIf="p.note">{{ p.note }}</span>
+            </div>
+            <span class="history-amount">₹{{ p.amount }}</span>
+          </div>
+        </div>
+
+      </ng-container>
+    </ng-container>
 
   </div>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="total-footer">
+    <div class="total-left">
+      <ion-icon name="wallet-outline"></ion-icon>
+      <span>{{ selectedMonth }}</span>
+    </div>
+    <span class="total-amount">₹{{ totalPaid() }}</span>
+  </div>
+</ion-footer>

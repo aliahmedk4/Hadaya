@@ -46,6 +46,21 @@ const routes: Routes = [
     path: 'hadith',
     loadChildren: () => import('./hadith/hadith.module').then(m => m.HadithPageModule)
   },
+  {
+    path: 'audit',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./audit/audit.module').then(m => m.AuditPageModule)
+  },
+  {
+    path: 'add-staff-payment',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./add-staff-payment/add-staff-payment.module').then(m => m.AddStaffPaymentPageModule)
+  },
+  {
+    path: 'expenses',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./expenses/expenses.module').then(m => m.ExpensesPageModule)
+  },
 ];
 
 @NgModule({
