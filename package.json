@@ -9,8 +9,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint",
-    "deploy": "ng build --configuration production && npx angular-cli-ghpages --dir=www --repo=https://github.com/aliahmedk4/Hadaya.git --branch=gh-pages --name=Hadaya --no-silent"
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -61,7 +60,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^48.2.1",
     "eslint-plugin-prefer-arrow": "1.2.2",
-    "gh-pages": "^6.3.0",
+    
     "jasmine-core": "~5.1.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.4.0",

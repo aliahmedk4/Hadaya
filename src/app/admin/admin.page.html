@@ -1,0 +1,185 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="admin-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin-list" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="admin-toolbar-title">Admin Profile</ion-title>
+    <ion-buttons slot="end" *ngIf="auth.isAli()">
+      <ion-button fill="clear" (click)="openEdit()">
+        <ion-icon name="create-outline" style="color:#fff;font-size:20px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="admin-hero">
+    <div class="admin-avatar">{{ initials }}</div>
+    <h2 class="admin-name">{{ (user?.firstName && user?.lastName) ? (user.firstName + ' ' + user.lastName) : (user?.username | titlecase) }}</h2>
+    <span class="admin-role-badge">
+      <ion-icon name="shield-checkmark-outline"></ion-icon> Administrator
+    </span>
+  </div>
+
+  <div class="admin-body">
+
+    <div class="info-section-label">ACCOUNT INFO</div>
+
+    <div class="info-card">
+      <div class="info-row">
+        <div class="info-icon-wrap">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Username</span>
+          <span class="info-value">{{ user?.username }}</span>
+        </div>
+      </div>
+      <div class="info-divider"></div>
+      <div class="info-row" *ngIf="user?.firstName || user?.lastName">
+        <div class="info-icon-wrap">
+          <ion-icon name="id-card-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Full Name</span>
+          <span class="info-value">{{ user?.firstName }} {{ user?.lastName }}</span>
+        </div>
+      </div>
+      <div class="info-divider" *ngIf="user?.firstName || user?.lastName"></div>
+      <div class="info-row" *ngIf="user?.mobile">
+        <div class="info-icon-wrap">
+          <ion-icon name="call-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Mobile</span>
+          <span class="info-value">{{ user?.mobile }}</span>
+        </div>
+      </div>
+      <div class="info-divider" *ngIf="user?.mobile"></div>
+      <div class="info-row" *ngIf="user?.email">
+        <div class="info-icon-wrap">
+          <ion-icon name="mail-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Email</span>
+          <span class="info-value">{{ user?.email }}</span>
+        </div>
+      </div>
+      <div class="info-divider" *ngIf="user?.email"></div>
+      <div class="info-row" *ngIf="user?.city">
+        <div class="info-icon-wrap">
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">City</span>
+          <span class="info-value">{{ user?.city }}</span>
+        </div>
+      </div>
+      <div class="info-divider" *ngIf="user?.city"></div>
+      <div class="info-row">
+        <div class="info-icon-wrap">
+          <ion-icon name="key-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Role</span>
+          <span class="info-value">{{ user?.role || 'Administrator' }}</span>
+        </div>
+      </div>
+      <div class="info-divider"></div>
+      <div class="info-row">
+        <div class="info-icon-wrap">
+          <ion-icon name="checkmark-circle-outline" style="color: #10b981;"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-label">Status</span>
+          <span class="info-value active">Active</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section-label" style="margin-top: 24px;">QUICK ACCESS</div>
+
+    <div class="quick-grid">
+      <div class="quick-card" routerLink="/audit">
+        <div class="quick-icon" style="background: linear-gradient(135deg,#1a6b3c,#2da05a);">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </div>
+        <span>Audit Log</span>
+      </div>
+      <div class="quick-card" routerLink="/backup">
+        <div class="quick-icon" style="background: linear-gradient(135deg,#0369a1,#0ea5e9);">
+          <ion-icon name="cloud-upload-outline"></ion-icon>
+        </div>
+        <span>Backup</span>
+      </div>
+      <div class="quick-card" routerLink="/expenses">
+        <div class="quick-icon" style="background: linear-gradient(135deg,#b45309,#f59e0b);">
+          <ion-icon name="trending-down-outline"></ion-icon>
+        </div>
+        <span>Expenses</span>
+      </div>
+      <div class="quick-card" routerLink="/reports">
+        <div class="quick-icon" style="background: linear-gradient(135deg,#7c3aed,#a78bfa);">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <span>Reports</span>
+      </div>
+    </div>
+
+    <!-- Admin List Link -->
+    <div class="admin-list-card" routerLink="/admin-list" *ngIf="auth.isAli()">
+      <div class="alc-left">
+        <div class="alc-icon">
+          <ion-icon name="people-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p class="alc-title">Manage Admins</p>
+          <p class="alc-sub">View, add or edit admin accounts</p>
+        </div>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="alc-arrow"></ion-icon>
+    </div>
+
+    <!-- QR & Payment Settings -->
+    <ng-container *ngIf="auth.isAli()">
+      <div class="info-section-label" style="margin-top:24px;">PAYMENT SETTINGS</div>
+
+      <div class="qr-card">
+        <div class="qr-top">
+          <div class="qr-label-wrap">
+            <ion-icon name="qr-code-outline"></ion-icon>
+            <span>Donation QR Code</span>
+          </div>
+          <label class="qr-upload-btn" for="qrFileInput">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+            {{ qrImageUrl ? 'Update' : 'Upload' }}
+          </label>
+          <input id="qrFileInput" type="file" accept="image/*" (change)="onQrFileSelected($event)" style="display:none;" />
+        </div>
+        <div class="qr-preview" *ngIf="qrImageUrl">
+          <img [src]="qrImageUrl" alt="QR Code" />
+        </div>
+        <div class="qr-empty" *ngIf="!qrImageUrl">
+          <ion-icon name="image-outline"></ion-icon>
+          <p>No QR uploaded yet</p>
+        </div>
+      </div>
+
+      <div class="pay-info-card" (click)="editPaymentInfo()">
+        <div class="pic-left">
+          <div class="pic-icon">
+            <ion-icon name="phone-portrait-outline"></ion-icon>
+          </div>
+          <div>
+            <p class="pic-title">UPI / PhonePe Info</p>
+            <p class="pic-sub">{{ upiId || 'Tap to set UPI ID' }}</p>
+          </div>
+        </div>
+        <ion-icon name="create-outline" class="pic-edit"></ion-icon>
+      </div>
+    </ng-container>
+
+  </div>
+
+</ion-content>

@@ -1,15 +1,26 @@
 <ion-app>
 
   <ion-menu contentId="main-content" type="overlay">
-    <ion-content class="menu-content" [scrollY]="false">
+    <ion-content class="menu-content">
 
-      <!-- Menu Header -->
-      <div class="menu-header">
+      <!-- Menu Header: app brand when logged out, user profile when logged in -->
+      <div class="menu-header" *ngIf="!auth.isLoggedIn()">
         <div class="menu-avatar">
           <ion-icon name="business-outline"></ion-icon>
         </div>
         <h3>Hadaya</h3>
         <p>Community Donation Tracker</p>
+      </div>
+
+      <div class="menu-user-card" *ngIf="auth.isLoggedIn()" (click)="goToProfile()">
+        <div class="muc-avatar">{{ auth.getUser()?.username?.[0]?.toUpperCase() }}</div>
+        <div class="muc-info">
+          <span class="muc-name">{{ (auth.getUser()?.firstName && auth.getUser()?.lastName) ? (auth.getUser().firstName + ' ' + auth.getUser().lastName) : (auth.getUser()?.username | titlecase) }}</span>
+          <span class="muc-role">{{ auth.getUser()?.role || 'Administrator' }}</span>
+        </div>
+        <div class="muc-arrow">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
       </div>
 
       <!-- Nav Items -->
@@ -89,10 +100,6 @@
           </a>
         </ng-container>
         <ng-container *ngIf="auth.isLoggedIn()">
-          <div class="logged-user">
-            <ion-icon name="person-circle-outline"></ion-icon>
-            <span>{{ auth.getUser()?.email }}</span>
-          </div>
           <a class="nav-item auth-item logout" (click)="logout()">
             <div class="nav-icon-wrap logout-icon">
               <ion-icon name="log-out-outline"></ion-icon>

@@ -1,0 +1,55 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="al-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="al-title">Administrators</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="al-hero">
+    <div class="al-hero-icon">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+    </div>
+    <h2>Admin Team</h2>
+    <p>{{ admins.length }} administrator{{ admins.length !== 1 ? 's' : '' }} registered</p>
+  </div>
+
+  <div class="al-body">
+
+    <!-- Skeleton -->
+    <ng-container *ngIf="loading">
+      <div class="admin-row skeleton" *ngFor="let i of [1,2,3]">
+        <ion-skeleton-text animated style="width:48px;height:48px;border-radius:50%;flex-shrink:0;"></ion-skeleton-text>
+        <div style="flex:1;padding-left:14px">
+          <ion-skeleton-text animated style="width:120px;height:14px;border-radius:6px;margin-bottom:6px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width:70px;height:11px;border-radius:6px;"></ion-skeleton-text>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Admin list -->
+    <div class="admin-row" *ngFor="let admin of admins" (click)="goToDetail(admin)">
+      <div class="admin-avatar">{{ getInitial(admin.username) }}</div>
+      <div class="admin-info">
+        <span class="admin-name">{{ getFullName(admin) | titlecase }}</span>
+        <span class="admin-role">{{ admin.role || 'Administrator' }}</span>
+      </div>
+      <button class="action-btn" *ngIf="auth.isAli()" (click)="openActions($event, admin)">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </button>
+      <ion-icon name="chevron-forward-outline" class="admin-arrow" *ngIf="!auth.isAli()"></ion-icon>
+    </div>
+
+  </div>
+
+  <!-- FAB: add new admin, only for ali -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="auth.isAli()">
+    <ion-fab-button (click)="openForm()">
+      <ion-icon name="person-add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

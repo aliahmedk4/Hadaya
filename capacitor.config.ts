@@ -5,10 +5,11 @@ const config: CapacitorConfig = {
   appName: 'Hadaya',
   webDir: 'www',
   plugins: {
-    StatusBar: {
-      overlaysWebView: false,
-      style: 'DARK',
-      backgroundColor: '#ffffff'
+    GoogleAuth: {
+      scopes: ['https://www.googleapis.com/auth/drive.appdata'],
+      clientId: '698576182522-ker3v1b3j0vhvnsurskcm2o32te43gn0.apps.googleusercontent.com',
+      serverClientId: '698576182522-ca5o3snq3bfopn0b2nibqh5tq08b7tog.apps.googleusercontent.com',
+      forceCodeForRefreshToken: false
     }
   }
 };

@@ -4,6 +4,36 @@
   flex-direction: column;
 }
 
+.menu-user-card {
+  background: linear-gradient(160deg, #1a6b3c 0%, #228b4e 60%, #2da05a 100%);
+  padding: 48px 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+
+  .muc-avatar {
+    width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800; color: #fff;
+  }
+
+  .muc-info {
+    flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    .muc-name { font-size: 15px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .muc-role { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  }
+
+  .muc-arrow {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    ion-icon { font-size: 14px; color: rgba(255,255,255,0.8); }
+  }
+}
+
 .menu-header {
   background: linear-gradient(160deg, #1a6b3c 0%, #228b4e 60%, #2da05a 100%);
   padding: 48px 24px 28px;
@@ -73,6 +103,11 @@
         font-size: 19px;
         color: var(--app-green-dark);
       }
+    }
+
+    &.nav-profile .nav-icon-wrap {
+      background: linear-gradient(135deg, #1a6b3c, #2da05a);
+      ion-icon { color: #fff; }
     }
 
     span {

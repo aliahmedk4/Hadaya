@@ -142,6 +142,20 @@
       </div>
     </div>
 
+    <!-- Admins Card -->
+    <div class="admin-count-card" routerLink="/admin-list" *ngIf="auth.isLoggedIn()">
+      <div class="admin-count-left">
+        <div class="admin-count-icon">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </div>
+        <div>
+          <p class="admin-count-label">Administrators</p>
+          <h3 class="admin-count-num">{{ adminCount }} Admin{{ adminCount !== 1 ? 's' : '' }}</h3>
+        </div>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="admin-count-arrow"></ion-icon>
+    </div>
+
     <!-- <div class="section-card charity-banner" routerLink="/charity">
       <div class="charity-left">
         <div class="charity-icon-wrap">
@@ -168,6 +182,45 @@
       </div>
       <ion-icon name="chevron-forward-outline" class="charity-arrow"></ion-icon>
     </div>
+
+    <!-- QR Donation Card -->
+    <div class="qr-donate-card" *ngIf="qrImageUrl">
+      <div class="qdc-header">
+        <div class="qdc-icon">
+          <ion-icon name="qr-code-outline"></ion-icon>
+        </div>
+        <div>
+          <h3 class="qdc-title">Scan & Donate</h3>
+          <p class="qdc-sub">{{ payName || 'Hadaya' }} · UPI Payment</p>
+        </div>
+      </div>
+      <div class="qdc-btn-row">
+        <button class="qdc-btn qdc-btn-show" (click)="qrOpen = true">
+          <ion-icon name="qr-code-outline"></ion-icon>
+          Show QR
+        </button>
+        <button class="qdc-btn qdc-btn-download" (click)="downloadQr()">
+          <ion-icon name="download-outline"></ion-icon>
+          Download QR
+        </button>
+      </div>
+      <button class="qdc-pay-btn" (click)="openPayment()" *ngIf="upiId">
+        <ion-icon name="phone-portrait-outline"></ion-icon>
+        Pay via PhonePe / GPay
+      </button>
+    </div>
+
+    <!-- QR Zoom Overlay -->
+    <!-- <div class="qr-overlay" *ngIf="qrOpen" (click)="qrOpen = false">
+      <div class="qr-overlay-box" (click)="$event.stopPropagation()">
+        <button class="qr-close" (click)="qrOpen = false">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+        <img [src]="qrImageUrl" alt="QR Code" />
+        <p class="qr-overlay-label">{{ payName || 'Hadaya' }}</p>
+        <p class="qr-overlay-upi" *ngIf="upiId">{{ upiId }}</p>
+      </div>
+    </div> -->
 
   </div>
 

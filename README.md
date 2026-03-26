@@ -111,3 +111,24 @@ Output: `android/app/build/outputs/apk/release/app-release.apk`
   ```
   android/my-release-key.keystore
   ```
+
+
+## GOOGLE DRIVE SHA
+when app run thought command than it use userprofile
+npx cap run android
+<!-- keytool -list -v -keystore %USERPROFILE%\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android -->    
+
+<!-- ionic build
+ionic cap sync android
+cd android
+.\gradlew assembleRelease -->
+<!-- keytool -list -v -keystore D:\ALI\Hadaya\android\app\my-release-key.keystore -->
+
+
+# FULL SYNC
+ionic build --prod          # compile web assets
+ionic cap sync android      # copy assets into Android project
+cd android
+./gradlew.bat assembleDebug   # build the actual APK
+cd..
+npx cap run android

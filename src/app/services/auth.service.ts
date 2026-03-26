@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -21,6 +21,33 @@ export class AuthService {
     return true;
   }
 
+  async getAllAdmins(): Promise<any[]> {
+    const snap = await getDocs(collection(this.db, 'Users'));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }
+
+  async updateAdmin(id: string, data: Partial<AdminProfile>): Promise<void> {
+    await updateDoc(doc(this.db, 'Users', id), data as any);
+    const current = this.getUser();
+    if (current?.id === id) {
+      localStorage.setItem(this.SESSION_KEY, JSON.stringify({ ...current, ...data }));
+    }
+  }
+
+  isAli(): boolean {
+    return this.getUser()?.username?.toLowerCase() === 'ali';
+  }
+
+  async addAdmin(data: { username: string; password: string } & Partial<AdminProfile>): Promise<void> {
+    const { addDoc } = await import('firebase/firestore');
+    await addDoc(collection(this.db, 'Users'), data);
+  }
+
+  async deleteAdmin(id: string): Promise<void> {
+    const { deleteDoc, doc } = await import('firebase/firestore');
+    await deleteDoc(doc(this.db, 'Users', id));
+  }
+
   logout() {
     localStorage.removeItem(this.SESSION_KEY);
   }
@@ -33,4 +60,13 @@ export class AuthService {
     const u = localStorage.getItem(this.SESSION_KEY);
     return u ? JSON.parse(u) : null;
   }
+}
+
+export interface AdminProfile {
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  email: string;
+  city: string;
+  role: string;
 }

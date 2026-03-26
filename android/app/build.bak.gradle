@@ -44,7 +44,15 @@ android {
         }
     }
 	
-	
+	applicationVariants.all { variant ->
+    	variant.outputs.all { output ->
+        def appName = "Hadaya"
+        def versionName = variant.versionName
+        def buildType = variant.buildType.name
+
+        outputFileName = "${appName}-${buildType}-v${versionName}.apk"
+    }
+	}
 }
 
 repositories {

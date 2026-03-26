@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 
-const ANDROID_CLIENT_ID = '698576182522-049gdgch1cc0d3tpfkfsceeugmuh4tip.apps.googleusercontent.com';
+const ANDROID_CLIENT_ID_1 = '698576182522-ker3v1b3j0vhvnsurskcm2o32te43gn0.apps.googleusercontent.com';
+const ANDROID_CLIENT_ID_2 = '698576182522-fv80llapn8mcfeabq4634dhss0m37r01.apps.googleusercontent.com';
 const WEB_CLIENT_ID    = '698576182522-ca5o3snq3bfopn0b2nibqh5tq08b7tog.apps.googleusercontent.com';
 const SCOPE            = 'https://www.googleapis.com/auth/drive.appdata';
 const BACKUP_FILENAME  = 'hadaya_backup.json';
@@ -16,6 +17,7 @@ const TOKEN_EXPIRY_KEY = 'gdrive_token_expiry';
 @Injectable({ providedIn: 'root' })
 export class GoogleDriveService {
 
+  private signInAttempt = 0;
   constructor(private http: HttpClient) {}
 
   // ── Auth ────────────────────────────────────────────────────────
@@ -58,14 +60,50 @@ export class GoogleDriveService {
     }
   }
 
-  private async nativeSignIn(): Promise<string> {
+  private async nativeSignIn2(): Promise<string> {
     const { GoogleAuth } = await import('@codetrix-studio/capacitor-google-auth');
   
     // ✅ MUST initialize on native
     GoogleAuth.initialize({
       clientId: Capacitor.isNativePlatform()
-        ? ANDROID_CLIENT_ID
+        ? ANDROID_CLIENT_ID_1
         : WEB_CLIENT_ID,
+      scopes: [SCOPE],
+      grantOfflineAccess: true,
+    });
+
+    
+  
+    try {
+      const user = await GoogleAuth.signIn();
+      const token = user.authentication?.accessToken;
+  
+      if (!token) throw new Error('No access token from native sign-in');
+  
+      this.cacheToken(token, 3500);
+      return token;
+  
+    } catch (e: any) {
+      console.error('Native Google Sign-In Error:', e);
+      throw new Error(e?.message || JSON.stringify(e) || 'Sign-in failed');
+    }
+  }
+
+  private async nativeSignIn(): Promise<string> {
+    const { GoogleAuth } = await import('@codetrix-studio/capacitor-google-auth');
+  
+    // toggle between 0 and 1
+    this.signInAttempt = this.signInAttempt === 0 ? 1 : 0;
+  
+    const clientIdToUse =
+      this.signInAttempt === 0
+        ? '698576182522-ker3v1b3j0vhvnsurskcm2o32te43gn0.apps.googleusercontent.com'
+        : '698576182522-fv80llapn8mcfeabq4634dhss0m37r01.apps.googleusercontent.com';
+  
+    console.log('Using Client ID:', clientIdToUse);
+  
+    GoogleAuth.initialize({
+      clientId: WEB_CLIENT_ID,
       scopes: [SCOPE],
       grantOfflineAccess: true,
     });
